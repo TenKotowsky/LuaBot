@@ -9,8 +9,8 @@ function commandsModule.Help(channel, prefix, embedColor)
 				{name = "**Source code:**", value = "https://github.com/TenKotowsky/LuaBot", inline = false},
 				{name = "**Prefix:**", value = prefix, inline = false},
 				{name = "**General commands:**", value = "`help`, `ping`", inline = false},
-				{name = "**QOTD commands (upcoming):**", value = "`addquestion`, `setqotdchannel`, `setqotdtime`, `setqotdthreadname`", inline = false},
-				{name = "**4Fun commands:**", value = "`robloxuserinfo [username]`", inline = false}
+				{name = "**Moderation commands:**", value = "`ban [user]`, `kick [user]`", inline = false},
+				{name = "**4Fun commands:**", value = "`quote`, `robloxuser [username]`", inline = false}
 			},
 			color = embedColor.value
 		}
@@ -21,8 +21,21 @@ function commandsModule.Ping(channel)
 	channel:send("Pong!")
 end
 
-function commandsModule.RobloxUserInfo(channel, embedColor, data, finalThumbnailData)
-	print(finalThumbnailData.imageUrl)
+local quotes = {
+	"In three words I can sum up everything I've learned about life: it goes on.\n- Robert Frost.",
+	"When something is important enough, you do it even if the odds are not in your favor.\n- Elon Musk",
+	"Life is really simple, but we insist on making it complicated.\n- Confucius",
+	"Learn from yesterday, live for today, hope for tomorrow. The important thing is not to stop questioning.\n- Albert Einstein",
+	"For what shall it profit a man, if he gain the whole world, and suffer the loss of his soul?\n - Jesus Christ",
+	"'Tis better to have loved and lost than never to have loved at all.\n Alfred Tennyson",
+	"The most hateful human misfortune is for a wise man to have no influence.\n Herodotus"
+}
+
+function commandsModule.RandomQuote(channel)
+	channel:send(quotes[math.random(1,#quotes)])
+end
+
+function commandsModule.RobloxUser(channel, embedColor, data, finalThumbnailData)
 	if data and finalThumbnailData then
 		local verifiedMsg = "Not verified"
 		if data.hasVerifiedBadge then
