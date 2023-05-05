@@ -12,6 +12,7 @@ local mainColor = discordia.Color.fromHex("#000080")
 
 client:once("ready", function()
 	print("Logged in as ".. client.user.username)
+	client:setActivity("luahelp | "..#client.guilds.." servers!")
 end)
 
 local function splitMessage(inputstr, sep)
@@ -182,6 +183,8 @@ client:on('messageCreate', function(message)
 					end
 				end
 
+			elseif words[1]:sub(4,#words[1]) == "randomnumber" and words[2] and words[3] then
+				commands.RandomNumber(message, words[2], words[3])
 			end
 		end
 	elseif message.mentionedUsers then
