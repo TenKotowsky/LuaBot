@@ -25,10 +25,29 @@ local function splitMessage(inputstr, sep)
 	return t
 end
 
-local function basicChecks(message, author, member, permission)
+local function secondsToHMS(seconds)
+	local seconds = tonumber(seconds)
+  
+	if seconds <= 0 then
+	  return "0 seconds";
+	else
+	  local hours = string.format("%02.f", math.floor(seconds/3600));
+	  local mins = string.format("%02.f", math.floor(seconds/60 - (hours*60)));
+	  local secs = string.format("%02.f", math.floor(seconds - hours*3600 - mins *60));
+	  if tonumber(hours) > 0 then
+		return hours.." hours "..mins.." minutes "..secs.." seconds"
+	  elseif tonumber(mins) > 0 then
+		return mins.." minutes "..secs.." seconds"
+	  else
+		return secs.." seconds"
+	  end
+	end
+end
+
+local function basicChecks(message, permission, author, member)
 	if author.bot then return false end
 	if not member then
-		-- The user have not mentioned any member to be banned
+		-- The user have not mentioned any member to be banned/kicked
 		if permission == "banMembers" then
 			message:reply("Please mention someone to ban!")
 		elseif permission == "kickMembers" then
@@ -41,6 +60,8 @@ local function basicChecks(message, author, member, permission)
 			message:reply("You don't have permission to ban members!")
 		elseif permission == "kickMembers" then
 			message:reply("You don't have permission to kick members!")
+		elseif permission == "manageChannels" then
+			message:reply("You don't have permission to manage channels!")
 		end
 		return false
 	end
@@ -105,7 +126,7 @@ client:on('messageCreate', function(message)
 				local author = message.guild:getMember(message.author.id)
 				local member = message.mentionedUsers.first
 
-				if basicChecks(message, author, member, "banMembers") == false then
+				if basicChecks(message, "banMembers", author, member) == false then
 					return
 				end
 
@@ -122,7 +143,7 @@ client:on('messageCreate', function(message)
 				local author = message.guild:getMember(message.author.id)
 				local member = message.mentionedUsers.first
 
-				if basicChecks(message, author, member, "kickMembers") == false then
+				if basicChecks(message, "kickMembers", author, member) == false then
 					return
 				end
 
@@ -134,6 +155,33 @@ client:on('messageCreate', function(message)
 						message:reply("Successfully kicked **"..user.username.."**")
 					end
 				end
+			elseif words[1]:sub(4,#words[1]) == "slowmode" and words[2] then
+
+				local limit
+				if tonumber(words[2]) then
+					limit = tonumber(words[2])
+					if limit > 21600 then
+						limit = 21600
+					end
+				else
+					return
+				end
+
+				local author = message.guild:getMember(message.author.id)
+				if basicChecks(message, "banMembers", author, true) == false then
+					return
+				end
+
+				if channel.type == 0 then
+					channel:setRateLimit(limit)
+					local convertedSeconds = secondsToHMS(limit)
+					if convertedSeconds == "0 seconds" then
+						message:reply("Disabled current channel's slowmode")
+					else
+						message:reply("Changed current channel's slowmode to **"..convertedSeconds.."**")
+					end
+				end
+
 			end
 		end
 	elseif message.mentionedUsers then
