@@ -45,6 +45,8 @@ client:on('messageCreate', function(message)
 				commands.Kick(message)
 			elseif words[1]:sub(4,#words[1]) == "slowmode" then
 				commands.Slowmode(message, words)
+			elseif words[1]:sub(4,#words[1]) == "userinfo" and words[2] then
+				commands.UserInfo(message.guild, channel, mainColor, message.mentionedUsers.first)
 			elseif words[1]:sub(4,#words[1]) == "avatar" and words[2] then
 				commands.Avatar(channel, mainColor, message.mentionedUsers.first)
 			elseif words[1]:sub(4,#words[1]) == "randomnumber" and words[2] and words[3] then
