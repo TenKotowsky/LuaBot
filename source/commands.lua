@@ -4,7 +4,7 @@ local json = require("json")
 local help = require("../../commands/help")
 local ping = require("../../commands/ping")
 local avatar = require("../../commands/avatar")
-local ban = require("../../commands/ban")
+local userinfo = require("../../commands/userinfo")
 local kick = require("../../commands/kick")
 local slowmode = require("../../commands/slowmode")
 local quote = require("../../commands/quote")
@@ -112,8 +112,8 @@ function commandsModule.RobloxUser(channel, embedColor, words)
 	robloxuser.RobloxUser(channel, embedColor, finalData[1], finalThumbnailData[1])
 end
 
-function commandsModule.Avatar(channel, embedColor, member)
-	avatar.Avatar(channel, embedColor, member)
+function commandsModule.Avatar(channel, embedColor, user)
+	avatar.Avatar(channel, embedColor, user)
 end
 
 function commandsModule.Ban(message)
@@ -179,6 +179,10 @@ function commandsModule.Slowmode(message, words)
 			message:reply("Changed current channel's slowmode to **"..convertedSeconds.."**")
 		end
 	end
+end
+
+function commandsModule.UserInfo(guild, channel, embedColor, user)
+	userinfo.UserInfo(guild, channel, embedColor, user)
 end
 
 return commandsModule
