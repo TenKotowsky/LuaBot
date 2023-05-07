@@ -49,6 +49,38 @@ client:on('messageCreate', function(message)
 				commands.UserInfo(message.guild, channel, mainColor, message.mentionedUsers.first)
 			elseif words[1]:sub(4,#words[1]) == "avatar" and words[2] then
 				commands.Avatar(channel, mainColor, message.mentionedUsers.first)
+			elseif words[1]:sub(4,#words[1]) == "spotifyartist" and words[2] then
+				local searchedArtist = ""
+				local selectedWords = {}
+				for i, v in ipairs(words) do
+					if i > 1 then
+						table.insert(selectedWords, v)
+					end
+				end
+				for i, v in pairs(selectedWords) do
+					if i == 1 then
+						searchedArtist = v
+					else
+						searchedArtist = searchedArtist..v
+					end
+				end
+				commands.SpotifyArtist(message, mainColor, searchedArtist, botData.SpotifyClientId, botData.SpotifySecret)
+			elseif words[1]:sub(4,#words[1]) == "spotifyalbum" and words[2] then
+				local searchedAlbum = ""
+				local selectedWords = {}
+				for i, v in ipairs(words) do
+					if i > 1 then
+						table.insert(selectedWords, v)
+					end
+				end
+				for i, v in pairs(selectedWords) do
+					if i == 1 then
+						searchedAlbum = v
+					else
+						searchedAlbum = searchedAlbum..v
+					end
+				end
+				commands.SpotifyAlbum(message, mainColor, searchedAlbum, botData.SpotifyClientId, botData.SpotifySecret)
 			elseif words[1]:sub(4,#words[1]) == "randomnumber" and words[2] and words[3] then
 				commands.RandomNumber(message, words[2], words[3])
 			end
