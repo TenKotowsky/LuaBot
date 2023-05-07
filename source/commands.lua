@@ -1,15 +1,16 @@
 local corohttp = require("../../deps/coro-http")
 local json = require("json")
+local base64 = require("../../deps/base64")
 
 local help = require("../../commands/help")
 local ping = require("../../commands/ping")
 local avatar = require("../../commands/avatar")
 local userinfo = require("../../commands/userinfo")
-local kick = require("../../commands/kick")
-local slowmode = require("../../commands/slowmode")
 local quote = require("../../commands/quote")
 local randomnumber = require("../../commands/randomnumber")
 local robloxuser = require("../../commands/robloxuser")
+local spotifyartist = require("../../commands/spotifyartist")
+local spotifyalbum = require("../../commands/spotifyalbum")
 
 local function basicChecks(message, permission, author, member)
 	if author.bot then return false end
@@ -92,10 +93,7 @@ function commandsModule.RobloxUser(channel, embedColor, words)
 		excludeBannedUsers = true
 	}
 	local url = "https://users.roblox.com/v1/usernames/users"
-	local body = {
-		content = "Hello There!\nThis is an example for a POST request using coro-http!"
-	}
-	local encodedBody = require("json").encode(infobody)
+	local encodedBody = json.encode(infobody)
 	
 	local headers = {
 		{"Content-Length", tostring(#encodedBody)},
@@ -183,6 +181,87 @@ end
 
 function commandsModule.UserInfo(guild, channel, embedColor, user)
 	userinfo.UserInfo(guild, channel, embedColor, user)
+end
+
+local function getSpotifyToken(clientId, clientSecret)
+	local headers = {
+		{"Authorization", "Basic "..base64.encode(clientId..":"..clientSecret)},
+		{"Content-Type", "application/x-www-form-urlencoded"},
+	}
+
+	local res, body = corohttp.request("POST", "https://accounts.spotify.com/api/token", headers, "grant_type=client_credentials")
+	return json.decode(body).access_token
+end
+
+local function getSpotifyAuthHeader(token)
+	return {{"Authorization", "Bearer "..token}}
+end
+
+local function getSpotifySongsByArtist(token, artistId)
+	local url = "https://api.spotify.com/v1/artists/"..artistId.."/top-tracks?country=US"
+	local headers = getSpotifyAuthHeader(token)
+
+	local res, body = corohttp.request("GET", url, headers)
+	return json.decode(body)
+end
+
+local function getAlbumTracks(token, albumId)
+	local url = "https://api.spotify.com/v1/albums/"..albumId.."/tracks?q=&limit=30"
+	local headers = getSpotifyAuthHeader(token)
+
+	local res, body = corohttp.request("GET", url, headers)
+	return json.decode(body)
+end
+
+function commandsModule.SpotifyArtist(message, embedColor, artistName, clientId, clientSecret)
+	local token
+	local decodedData
+	local success, res = pcall(function()
+		token = getSpotifyToken(clientId, clientSecret)
+		local url = "https://api.spotify.com/v1/search"
+		local headers = getSpotifyAuthHeader(token)
+		local query = "?q="..artistName.."&type=artist&limit=1"
+		local queryUrl = url..query
+
+		local res, body = corohttp.request("GET", queryUrl, headers)
+		decodedData = json.decode(body).artists.items
+	end)
+	if success then
+		if decodedData[1] then
+			local tracksData = getSpotifySongsByArtist(token, decodedData[1].id)
+			spotifyartist.SpotifyArtist(message.channel, embedColor, decodedData[1], tracksData)
+		else
+			message:reply("No artist with this name was found!")
+		end
+	else
+		message:reply("An error occured while trying to get artist info!")
+	end
+end
+
+function commandsModule.SpotifyAlbum(message, embedColor, albumName, clientId, clientSecret)
+	local token
+	local decodedData
+	local success, res = pcall(function()
+		token = getSpotifyToken(clientId, clientSecret)
+		local url = "https://api.spotify.com/v1/search"
+		local headers = getSpotifyAuthHeader(token)
+		local query = "?q="..albumName.."&type=album&limit=1"
+		local queryUrl = url..query
+
+		local res, body = corohttp.request("GET", queryUrl, headers)
+		decodedData = json.decode(body).albums.items
+	end)
+
+	if success then
+		if decodedData[1] then
+			local albumTracks = getAlbumTracks(token, decodedData[1].id).items
+			spotifyalbum.SpotifyAlbum(message.channel, embedColor, decodedData[1], albumTracks)
+		else
+			message:reply("No album with this name was found!")
+		end
+	else
+		message:reply("An error occured while trying to get album info!")
+	end
 end
 
 return commandsModule
