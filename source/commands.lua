@@ -206,7 +206,7 @@ local function getSpotifySongsByArtist(token, artistId)
 end
 
 local function getAlbumTracks(token, albumId)
-	local url = "https://api.spotify.com/v1/albums/"..albumId.."/tracks?q=&limit=30"
+	local url = "https://api.spotify.com/v1/albums/"..albumId.."/tracks?q=&limit=49"
 	local headers = getSpotifyAuthHeader(token)
 
 	local res, body = corohttp.request("GET", url, headers)
