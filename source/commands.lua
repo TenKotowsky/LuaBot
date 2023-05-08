@@ -168,7 +168,7 @@ function commandsModule.Slowmode(message, words)
 	end
 
 	local author = message.guild:getMember(message.author.id)
-	if basicChecks(message, "banMembers", author, true) == false then
+	if basicChecks(message, "manageChannels", author, true) == false then
 		return
 	end
 
