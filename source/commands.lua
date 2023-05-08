@@ -32,7 +32,7 @@ local function basicChecks(message, permission, author, member)
 			message:reply("You don't have permission to kick members!")
 		elseif permission == "manageChannels" then
 			message:reply("You don't have permission to manage channels!")
-		elseif permission == "manageServer" then
+		elseif permission == "manageGuild" then
 			message:reply("You don't have permission to manage server!")
 		end
 		return false
@@ -270,7 +270,7 @@ end
 
 function commandsModule.Prefix(message, guildId, prefix)
 	local author = message.guild:getMember(message.author.id)
-	if basicChecks(message, "manageServer", author, true) == false then
+	if basicChecks(message, "manageGuild", author, true) == false then
 		return
 	end
 	prefix = tostring(prefix)
