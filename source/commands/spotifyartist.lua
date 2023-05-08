@@ -11,6 +11,7 @@ function spotifyArtist.SpotifyArtist(channel, embedColor, artistData, tracksData
 		channel:send {
             embed = {
                 title = artistData.name,
+                url = artistData.external_urls.spotify,
                 thumbnail = {url = artistData.images[1].url},
                 fields = fieldsT,
                 color = embedColor.value

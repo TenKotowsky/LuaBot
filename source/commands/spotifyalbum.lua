@@ -34,6 +34,7 @@ function spotifyAlbum.SpotifyAlbum(channel, embedColor, albumData, albumTracks)
             channel:send {
                 embed = {
                     title = albumData.name,
+                    url = albumData.external_urls.spotify,
                     thumbnail = {url = albumData.images[1].url},
                     fields = fieldsT,
                     color = embedColor.value
@@ -43,6 +44,7 @@ function spotifyAlbum.SpotifyAlbum(channel, embedColor, albumData, albumTracks)
             channel:send {
                 embed = {
                     title = albumData.name,
+                    url = albumData.external_urls.spotify,
                     thumbnail = {url = albumData.images[1].url},
                     fields = fieldsT,
                     color = embedColor.value
@@ -57,6 +59,7 @@ function spotifyAlbum.SpotifyAlbum(channel, embedColor, albumData, albumTracks)
             channel:send {
                 embed = {
                     title = albumData.name,
+                    url = albumData.external_urls.spotify,
                     thumbnail = {url = albumData.images[1].url},
                     fields = secondFieldsT,
                     color = embedColor.value
