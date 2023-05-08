@@ -1,6 +1,8 @@
 local corohttp = require("../../deps/coro-http")
 local json = require("json")
 local base64 = require("../../deps/base64")
+local sqlite3 = require("../../deps/sqlite3")
+local conn = sqlite3.open("DataBase.sqlite")
 
 local help = require("../../commands/help")
 local ping = require("../../commands/ping")
@@ -30,6 +32,8 @@ local function basicChecks(message, permission, author, member)
 			message:reply("You don't have permission to kick members!")
 		elseif permission == "manageChannels" then
 			message:reply("You don't have permission to manage channels!")
+		elseif permission == "manageServer" then
+			message:reply("You don't have permission to manage server!")
 		end
 		return false
 	end
@@ -261,6 +265,29 @@ function commandsModule.SpotifyAlbum(message, embedColor, albumName, clientId, c
 		end
 	else
 		message:reply("An error occured while trying to get album info!")
+	end
+end
+
+function commandsModule.Prefix(message, guildId, prefix)
+	local author = message.guild:getMember(message.author.id)
+	if basicChecks(message, "manageServer", author, true) == false then
+		return
+	end
+	prefix = tostring(prefix)
+	guildId = tonumber(guildId)
+	if #prefix > 10 then
+		message:reply("The prefix can't have more than 10 characters!")
+	else
+		local t = conn:exec("SELECT * FROM serverconfig WHERE guildId = '"..guildId.."';")
+		if not t then
+			-- No rows returned, so insert a new record
+			conn:exec("INSERT INTO serverconfig VALUES("..guildId..", '"..prefix.."');")
+			message:reply("This server's prefix has been changed to "..prefix)
+		else
+			-- Rows returned, so update the existing record
+			conn:exec("UPDATE serverconfig SET prefix = '"..prefix.."' WHERE guildId = "..guildId..";")
+			message:reply("This server's prefix has been changed to "..prefix)
+		end
 	end
 end
 
