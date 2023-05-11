@@ -11,6 +11,7 @@ function help.Help(channel, prefix, embedColor)
 				{name = "**Server prefix:**", value = prefix, inline = false},
 				{name = "**General commands:**", value = "`help`, `ping`, `prefix [prefix]`, `userinfo [user]`, `avatar [user]`", inline = false},
 				{name = "**Moderation commands:**", value = "`ban [user]`, `kick [user]`, `slowmode [0-21600s]`", inline = false},
+				{name = "**[BETA, USE AT YOUR OWN RISK] Periodic questions (QOTD/W) related commands:**", value = "`questionperiod [day/week]`, `questionchannel [channel id]`, `questionlist`, `questionadd [question]`, `questionremove [index]`, `questiontime [hour]`", inline = false},
 				{name = "**4Fun commands:**", value = "`quote`, `randomnumber [min] [max]`, `spotifyartist [name]`, `spotifyalbum [name]`, `robloxuser [username]`", inline = false}
 			},
 			color = embedColor.value
