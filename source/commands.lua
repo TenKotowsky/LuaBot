@@ -291,4 +291,214 @@ function commandsModule.Prefix(message, guildId, prefix)
 	end
 end
 
+function commandsModule.QuestionChannel(message, guildId, channelId)
+	local success, res = pcall(function()
+		local author = message.guild:getMember(message.author.id)
+		if basicChecks(message, "manageChannels", author, true) == false then
+			return
+		end
+		local numberChannelId = tonumber(channelId)
+		if numberChannelId == nil then
+			message:reply("Add a proper channel ID!")
+		else
+			local t = conn:exec("SELECT * FROM periodicquestions WHERE guildId = '"..guildId.."';")
+			if not t then
+				-- No rows returned, so insert a new record
+				conn:exec("INSERT INTO periodicquestions VALUES("..guildId..", '".."day".."', NULL, "..channelId..", NULL, NULL);")
+				message:reply("Periodic question channel has been changed to <#"..channelId..">")
+			else
+				-- Rows returned, so update the existing record
+				conn:exec("UPDATE periodicquestions SET channelId = "..channelId.." WHERE guildId = "..guildId..";")
+				message:reply("Periodic question channel has been changed to <#"..channelId..">")
+			end
+		end
+	end)
+	if not success then
+		print(res)
+	end
+end
+
+function commandsModule.QuestionPeriod(message, guildId, period)
+	local success, res = pcall(function()
+		local author = message.guild:getMember(message.author.id)
+		if basicChecks(message, "manageChannels", author, true) == false then
+			return
+		end
+		if period ~= "day" and period ~= "week" then
+			message:reply("Add a proper period (day/week)!")
+		else
+			local t = conn:exec("SELECT * FROM periodicquestions WHERE guildId = '"..guildId.."';")
+			if not t then
+				-- No rows returned, so insert a new record
+				conn:exec("INSERT INTO periodicquestions VALUES("..guildId..", '"..period.."', NULL, NULL, NULL, NULL);")
+				local modeName
+				if period == "day" then
+					modeName = "QOTD"
+				else
+					modeName = "QOTW"
+				end
+				message:reply("Period has been changed to "..period.." **("..modeName..")**.")
+			else
+				-- Rows returned, so update the existing record
+				conn:exec("UPDATE periodicquestions SET period = '"..period.."' WHERE guildId = "..guildId..";")
+				local modeName
+				if period == "day" then
+					modeName = "QOTD"
+				else
+					modeName = "QOTW"
+				end
+				message:reply("Period has been changed to "..period.." **("..modeName..")**.")
+			end
+		end
+	end)
+	if not success then
+		print(res)
+	end
+end
+
+function commandsModule.QuestionAdd(message, guildId, question)
+	local success, res = pcall(function()
+		local author = message.guild:getMember(message.author.id)
+		if basicChecks(message, "manageChannels", author, true) == false then
+			return
+		end
+		if not question or #question < 0 then
+			message:reply("Add a proper question!")
+		else
+			local currentT = conn:exec("SELECT * FROM periodicquestions WHERE guildId = '"..guildId.."';")
+			if not currentT[1] then
+				-- No rows returned, so insert a new record
+				conn:exec("INSERT INTO periodicquestions VALUES("..guildId..", '".."day".."', "..table.concat({question}, "%%%")..", NULL, NULL, NULL);")
+				message:reply("Added question to the pool!")
+			else
+	--			local currentQuestions = conn:exec("SELECT questions FROM periodicquestions WHERE guildId = '"..guildId.."';")
+				local currentQuestions = currentT[3][1]
+				if currentQuestions == nil then
+					print(currentQuestions)
+					conn:exec("UPDATE periodicquestions SET questions = '"..table.concat({question}, "%%%").."' WHERE guildId = "..guildId..";")
+					message:reply("Added question to the pool!")
+				else
+					local deserialized = {}
+					for s in currentQuestions:gmatch("[^%%%%]+") do
+					table.insert(deserialized, s)
+					end
+					if #deserialized >= 10 then
+						message:reply("The question pool can't have more than 10 questions at a time!")
+					else
+						table.insert(deserialized, question)
+	
+						conn:exec("UPDATE periodicquestions SET questions = '"..table.concat(deserialized, "%%%").."' WHERE guildId = "..guildId..";")
+						message:reply("Added question to the pool!")
+					end
+				end
+			end
+		end
+	end)
+	if not success then
+		print(res)
+	end
+end
+
+function commandsModule.QuestionList(message, embedColor, guildId)
+	local success, res = pcall(function()
+		local author = message.guild:getMember(message.author.id)
+		if basicChecks(message, "manageChannels", author, true) == false then
+			return
+		end
+		local questions = conn:exec("SELECT questions FROM periodicquestions WHERE guildId = '"..guildId.."';")
+		if questions == nil then
+			message:reply("The question pool is empty!")
+		else
+			local deserialized = {}
+			for s in questions[1][1]:gmatch("[^%%%%]+") do
+			   table.insert(deserialized, s)
+			end
+	
+			local finalString = ""
+			for i, v in pairs(deserialized) do
+				if i == 1 then
+					finalString = ""..i..".".." "..v..""
+				else
+					finalString = finalString..",\n"..i..".".." "..v..""
+				end
+			end
+			message:reply{
+				embed = {
+					title = "Question pool",
+					fields = {
+						{name = "Amount of questions:", value = #deserialized, inline = false},
+						{name = "Questions: ", value = finalString, inline = false}
+					},
+					color = embedColor.value
+				}
+			}
+		end
+	end)
+	if not success then
+		print(res)
+	end
+end
+
+function commandsModule.QuestionRemove(message, guildId, index)
+	local success, res = pcall(function()
+		local author = message.guild:getMember(message.author.id)
+		if basicChecks(message, "manageChannels", author, true) == false then
+			return
+		end
+		local index = tonumber(index)
+		if index then
+			local questions = conn:exec("SELECT questions FROM periodicquestions WHERE guildId = '"..guildId.."';")
+			if questions == nil then
+				message:reply("The question pool is empty!")
+			else
+				local deserialized = {}
+				for s in questions[1][1]:gmatch("[^&|&|]+") do
+					table.insert(deserialized, s)
+				end
+	
+				table.remove(deserialized, index)
+	
+				conn:exec("UPDATE periodicquestions SET questions = '"..table.concat(deserialized, "&|&|").."' WHERE guildId = "..guildId..";")
+				message:reply("Removed the question from the pool!")
+			end
+		else
+			message:reply("Provide a proper question index!")
+		end
+	end)
+	if not success then
+		print(res)
+	end
+end
+
+function commandsModule.QuestionTime(message, guildId, hour)
+	local success, res = pcall(function()
+		local author = message.guild:getMember(message.author.id)
+		if basicChecks(message, "manageChannels", author, true) == false then
+			return
+		end
+		if tonumber(hour) and tonumber(hour) <= 24 then
+			local hour = tonumber(hour)
+			if hour == 24 then
+				hour = 0
+			end
+			local t = conn:exec("SELECT * FROM periodicquestions WHERE guildId = '"..guildId.."';")
+			if not t then
+				-- No rows returned, so insert a new record
+				local lastTimeSent = nil
+				conn:exec("INSERT INTO periodicquestions VALUES ("..guildId..", 'day', '', NULL, "..hour..", NULL);")
+				message:reply("The time of sending period questions set to **"..hour..":00**.")
+			else
+				-- Rows returned, so update the existing record
+				conn:exec("UPDATE periodicquestions SET time = '"..hour.."' WHERE guildId = "..guildId..";")
+				message:reply("The time of sending period questions set to **"..hour..":00**.")
+			end
+		else
+			message:reply("Add a valid hour! *(Remember to use 24-hour clock)*")
+		end
+	end)
+	if not success then
+		print(res)
+	end
+end
+
 return commandsModule
