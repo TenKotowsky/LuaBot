@@ -26,10 +26,11 @@ local function initializeCommands()
         end))
     end
 end
-initializeCommands()
 
 Client:on("ready", function()
     print("Bot is ready! :)")
+    initializeCommands()
+    print("Commands initialized!")
     Client:setActivity("Mention me for help! | "..#Client.guilds.." servers!")
 end)
 
