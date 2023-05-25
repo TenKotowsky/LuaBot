@@ -31,14 +31,25 @@ function recipe:run(context)
 	end)
 
 	if finalRecipeData then
+		local fields
+		if #finalRecipeData.instructions <= 1024 then
+			fields = {
+				{name = "Servings:", value = finalRecipeData.servings, inline = false},
+				{name = "Ingredients:", value = finalRecipeData.ingredients:gsub("%|", "\n"), inline = false},
+				{name = "Instructions:", value = finalRecipeData.instructions, inline = false}
+			}
+		else
+			fields = {
+				{name = "Servings:", value = finalRecipeData.servings, inline = false},
+				{name = "Ingredients:", value = finalRecipeData.ingredients:gsub("%|", "\n"), inline = false},
+				{name = "Instructions:", value = finalRecipeData.instructions:sub(1, 1024), inline = false},
+				{name = "", value = finalRecipeData.instructions:sub(1025, #finalRecipeData.instructions), inline = false}
+			}
+		end
 		channel:send {
 			embed = {
 				title = finalRecipeData.title,
-				fields = {
-					{name = "Servings:", value = finalRecipeData.servings, inline = false},
-					{name = "Ingredients:", value = finalRecipeData.ingredients:gsub("%|", "\n"), inline = false},
-					{name = "Instructions:", value = finalRecipeData.instructions, inline = false}
-				},
+				fields = fields,
 				color = _G.MainColor.value
 			}
 		}

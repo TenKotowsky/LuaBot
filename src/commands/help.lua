@@ -1,6 +1,7 @@
 local sqlite3 = require("sqlite3")
 local conn = sqlite3.open("DataBase.sqlite")
 local BotData = require("../dependencies/BotData.lua")
+local Functions = require("../dependencies/Functions.lua")
 
 local help = {}
 
@@ -13,22 +14,28 @@ function help:run(context)
 		prefix = prefixData.prefix[1]
 	end
 
-    context.Message.channel:send {
-		embed = {
-			title = "Info",
-			description = "LuaBot is a multi-purpose Discord bot equipped with moderation tools, community managment tools and other features!",
-			fields = {
-				{name = "**Website:**", value = "https://tenkotowsky.github.io/", inline = false},
-				{name = "**You can upvote me here! <3:**", value = "https://discordbotlist.com/bots/luabot", inline = false},
-				{name = "**Server prefix:**", value = prefix, inline = false},
-				{name = "**General commands:**", value = "`help`, `prefix [prefix]`, `serverinfo`, `userinfo [user]`, `avatar [user]`", inline = false},
-				{name = "**Moderation commands:**", value = "`ban [user] [reason]`, `tempban [user] [days] [reason]`, `kick [user]`, `slowmode [0-21600s]`", inline = false},
-				{name = "**[BETA, USE AT YOUR OWN RISK] Periodic questions (QOTD/W) related commands:**", value = "`questionperiod [day/week]`, `questionchannel [channel id]`, `questionlist`, `questionadd [question]`, `questionremove [index]`, `questiontime [hour]`", inline = false},
-				{name = "**4Fun commands:**", value = "`ping`, `echo`, `eightball`, `quote`, `recipe [dish]`, `rhyme [word]`, `urbandict [term]`, `randomnumber [min] [max]`, `spotifyartist [name]`, `spotifyalbum [name]`, `robloxuser [username]`", inline = false}
-			},
-			color = _G.MainColor.value
-		}
+	local embed = {
+		title = "Info",
+		description = "LuaBot is a multi-purpose Discord bot equipped with moderation tools, community managment tools and other features!",
+		fields = {
+			{name = "**Website:**", value = "https://tenkotowsky.github.io/", inline = false},
+			{name = "**You can upvote me here! <3:**", value = "https://discordbotlist.com/bots/luabot", inline = false},
+			{name = "**Server prefix:**", value = prefix, inline = false},
+			{name = "**General commands:**", value = "`help`, `prefix [prefix]`, `serverinfo`, `userinfo [user]`, `avatar [user]`, `embed [text]`", inline = false},
+			{name = "**Moderation commands:**", value = "`ban [user] [reason]`, `tempban [user] [days] [reason]`, `kick [user]`, `slowmode [0-21600s]`", inline = false},
+			{name = "**[BETA] Periodic questions (QOTD/W) related commands:**", value = "`questionperiod [day/week]`, `questionchannel [channel id]`, `questionlist`, `questionadd [question]`, `questionremove [index]`, `questiontime [hour]`", inline = false},
+			{name = "**4Fun commands:**", value = "`ping`, `echo`, `eightball`, `quote`, `recipe [dish]`, `rhyme [word]`, `urbandict [term]`, `randomnumber [min] [max]`, `spotifyartist [name]`, `spotifyalbum [name]`, `robloxuser [username]`", inline = false}
+		},
+		color = _G.MainColor.value
 	}
+
+	local message, err = context.Message.channel:send {
+		embed = embed
+	}
+	if not message then
+		Functions.printTable(embed)
+		print(err) -- see what the error message is
+	end
 end
 
 return help
