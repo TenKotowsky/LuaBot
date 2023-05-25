@@ -30,11 +30,6 @@ function Commands.Ban(context)
 	ban:run(context)
 end
 
-local tempban = require("../commands/tempban.lua")
-function Commands.Tempban(context)
-	tempban:run(context)
-end
-
 local kick = require("../commands/kick.lua")
 function Commands.Kick(context)
 	kick:run(context)
@@ -83,6 +78,11 @@ end
 local echo = require("../commands/echo.lua")
 function Commands.Echo(context)
     echo:run(context)
+end
+
+local embed = require("../commands/embed.lua")
+function Commands.Embed(context)
+	embed:run(context)
 end
 
 local quote = require("../commands/quote.lua")
