@@ -106,4 +106,50 @@ function Functions.getAlbumTracks(token, albumId)
 	return json.decode(body)
 end
 
+function Functions.printTable(tbl, indent)
+	if not indent then indent = 0 end
+	local toprint = string.rep(" ", indent) .. "{\r\n"
+	indent = indent + 2
+	for k, v in pairs(tbl) do
+	 	toprint = toprint .. string.rep(" ", indent)
+		if (type(k) == "number") then
+			toprint = toprint .. "[" .. k .. "] = "
+		elseif (type(k) == "string") then
+			toprint = toprint  .. k ..  "= "   
+		end
+		if (type(v) == "number") then
+			toprint = toprint .. v .. ",\r\n"
+		elseif (type(v) == "string") then
+			toprint = toprint .. "\"" .. v .. "\",\r\n"
+		elseif (type(v) == "table") then
+			toprint = toprint .. Functions.printTable(v, indent + 2) .. ",\r\n"
+		else
+			toprint = toprint .. "\"" .. tostring(v) .. "\",\r\n"
+		end
+	end
+	toprint = toprint .. string.rep(" ", indent-2) .. "}"
+	print(toprint)
+	return toprint
+end
+
+function Functions.convertToHours(time)
+	local hours
+	if time then
+		if tonumber(time) then
+			hours = time
+		elseif time:sub(#time, #time) == "h" then
+			hours = tonumber(time:sub(1, #time - 1))
+		elseif time:sub(#time, #time) == "d" then
+			hours = tonumber(time:sub(1, #time - 1)) * 24
+		elseif time:sub(#time, #time) == "w" then
+			hours = tonumber(time:sub(1, #time - 1)) * 168
+		elseif time:sub(#time, #time) == "m" then
+			hours = tonumber(time:sub(1, #time - 1)) * 720
+		end
+	else
+		return nil
+	end
+	return hours
+end
+
 return Functions
