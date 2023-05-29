@@ -21,10 +21,10 @@ function help:run(context)
 			{name = "**Website:**", value = "https://tenkotowsky.github.io/", inline = false},
 			{name = "**You can upvote me here! <3:**", value = "https://discordbotlist.com/bots/luabot", inline = false},
 			{name = "**Server prefix:**", value = prefix, inline = false},
-			{name = "**General commands:**", value = "`help`, `prefix [prefix]`, `serverinfo`, `userinfo [user]`, `avatar [user]`, `embed [text]`", inline = false},
-			{name = "**Moderation commands:**", value = "`ban [user] [reason]`, `tempban [user] [days] [reason]`, `kick [user]`, `slowmode [0-21600s]`", inline = false},
-			{name = "**[BETA] Periodic questions (QOTD/W) related commands:**", value = "`questionperiod [day/week]`, `questionchannel [channel id]`, `questionlist`, `questionadd [question]`, `questionremove [index]`, `questiontime [hour]`", inline = false},
-			{name = "**4Fun commands:**", value = "`ping`, `echo`, `eightball`, `quote`, `recipe [dish]`, `rhyme [word]`, `urbandict [term]`, `randomnumber [min] [max]`, `spotifyartist [name]`, `spotifyalbum [name]`, `robloxuser [username]`", inline = false}
+			{name = "**General commands:**", value = "`help`, `ping`, `prefix [prefix]`, `serverinfo`, `userinfo [user]`, `avatar [user]`, `embed [text]`", inline = false},
+			{name = "**Moderation commands:**", value = "`ban [user] [reason]`, `tempban [user] [hours] [reason]`, `kick [user]`, `slowmode [0-21600s]`", inline = false},
+			{name = "**[BETA] Periodic questions (QOTD/W) related commands:**", value = "`questionperiod [day/week]`, `questionchannel [channel id]`, `questionadd [question]`, `questionremove [index]`, `questiontime [hour]`, `questionlist`", inline = false},
+			{name = "**4Fun commands:**", value = "`echo`, `eightball`, `quote`, `recipe [dish]`, `rhyme [word]`, `urbandict [term]`, `randomnumber [min] [max]`, `spotifyartist [name]`, `spotifyalbum [name]`, `robloxuser [username]`", inline = false}
 		},
 		color = _G.MainColor.value
 	}

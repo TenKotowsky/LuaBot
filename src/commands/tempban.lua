@@ -1,4 +1,6 @@
 local Functions = require("../dependencies/Functions.lua")
+local sqlite3 = require("sqlite3")
+local conn = sqlite3.open("DataBase.sqlite")
 
 local tempban = {}
 
@@ -27,26 +29,30 @@ function tempban:run(context)
 	end
 
 	if author.highestRole.position > member.highestRole.position then
-		local reason = ""
 		table.remove(args, 1)
 
-		if #args <= 1 then
-			reason = "Reason not provided"
-		end
-		for i, v in pairs(args) do
-            if i ~= 1 then
-                reason = reason.." "..v
-            end
-		end
-        local days
-        if tonumber(args[1]) then
-            days = tonumber(args[1])
-        else
-            message:reply("Specify a proper amount of days the user should get banned for!")
+        local hours = Functions.convertToHours(args[1])
+        if not hours then
+            message:reply("Specify a proper amount of hours the user should get banned for!")
             return
-        end
-		member:ban(reason, days)
-		message:reply("Successfully banned **"..user.username.."** for **"..days.." days**")
+		end
+		table.remove(args, 1)
+
+		local reason = ""
+		if #args == 0 then
+			reason = "Reason not provided"
+		else
+			for i, v in pairs(args) do
+				if i == 1 then
+					reason = v
+				else
+					reason = reason.." "..v
+				end
+			end
+		end
+		conn:exec("INSERT INTO tempban VALUES("..message.guild.id..", '"..user.id.."', "..(os.time() + hours*3600)..");")
+		member:ban(reason)
+		message:reply("Successfully banned **"..user.username.."** for **"..hours.." hours**")
 	else
 		message:reply("You can't ban someone whose highest role is higher than your highest role!")
 	end

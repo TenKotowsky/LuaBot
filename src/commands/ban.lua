@@ -32,9 +32,10 @@ function ban:run(context)
 
 		if #args == 0 then
 			reason = "Reason not provided"
-		end
-		for i, v in pairs(args) do
-			reason = reason.." "..v
+		else
+			for i, v in pairs(args) do
+				reason = reason.." "..v
+			end
 		end
 		member:ban(reason)
 		message:reply("Successfully banned **"..user.username.."**")

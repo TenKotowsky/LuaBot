@@ -10,10 +10,9 @@ local Functions = require("../dependencies/Functions.lua")
 
 _G.MainColor = Discordia.Color.fromHex("#000080")
 
---conn:exec[[
+--conn:exec("CREATE TABLE tempban(guildId TEXT, userId TEXT, time TEXT);")
 --CREATE TABLE periodicquestionsconfig(guildId TEXT, period VARCHAR(5), channelId TEXT, time INTEGER, lastTimeSent INTEGER);
 --CREATE TABLE periodicquestions(guildId TEXT, question TEXT);
---]]
 
 local function initializeCommands()
     for key, callback in pairs(Commands) do
@@ -29,8 +28,8 @@ end
 
 Client:on("ready", function()
     print("Bot is ready! :)")
-    initializeCommands()
-    print("Commands initialized!")
+	initializeCommands()
+	print("Commands initialized!")
     Client:setActivity("Mention me for help! | "..#Client.guilds.." servers!")
 end)
 
@@ -60,10 +59,10 @@ end)
 Client:on("heartbeat", function(shardId, latency)
 	Client:setActivity("Mention me for help! | "..#Client.guilds.." servers!")
     local hour = os.date("*t").hour
-	local allData = conn:exec("SELECT guildId FROM periodicquestionsconfig")
-	if allData ~= nil then
-		for i, v in ipairs(allData) do
-			local success, result = pcall(function()
+	local questionsAllData = conn:exec("SELECT guildId FROM periodicquestionsconfig")
+	if questionsAllData ~= nil then
+		for i, v in ipairs(questionsAllData) do
+			local success, res = pcall(function()
 
 				local time = conn:exec("SELECT time FROM periodicquestionsconfig WHERE guildId = '"..v[1].."'")
 				if time and hour == time[1][1] then
@@ -101,7 +100,22 @@ Client:on("heartbeat", function(shardId, latency)
 					end
 				end
 			end)
-			if not success then print(result) end
+			if not success then print(res) end
+		end
+	end
+	local tempbans = conn:exec("SELECT rowid, * FROM tempban")
+	if tempbans ~= nil then
+		for i, v in ipairs(tempbans[2]) do
+			-- v[1] - rowid
+
+			local success, res = pcall(function()
+				if os.time() >= tonumber(tempbans[4][i]) and tonumber(tempbans[4][i])  then
+					conn:exec("DELETE FROM tempban WHERE rowid = " .. tonumber(tempbans[1][i]) .. ";")
+					local guild = Client:getGuild(v)
+					guild:unbanUser(tempbans[3][i])
+				end
+			end)
+			if not success then print(res) end
 		end
 	end
 end)

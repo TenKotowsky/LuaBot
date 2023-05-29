@@ -6,7 +6,7 @@ function serverinfo:run(context)
 	if #guild.features ~= 0 then
 		for i, v in pairs(guild.features) do
 			if i == 1 then
-				serverFeatures = v
+				serverFeatures = v:gsub("_", "")
 			else
 				serverFeatures  = serverFeatures.."\n"..v
 			end
