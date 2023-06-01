@@ -8,10 +8,8 @@ function echo:run(context)
     if #args > 0 then
         local finalString = ""
         for i, v in pairs(context.Args) do
-            if v == "@everyone" then
-                v = "@​everyone"
-            elseif v == "@here" then
-                v = "@​here"
+            if string.find(v, "@") then
+                v = v:gsub("@", "@​")
             end
             if i == 1 then
                 finalString = v
