@@ -1,3 +1,4 @@
+require("discordia-expanded")
 local Functions = require("../dependencies/Functions.lua")
 
 local ban = {}

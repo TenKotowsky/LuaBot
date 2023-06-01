@@ -1,4 +1,4 @@
-local Discordia = require("Discordia")
+require("discordia-expanded")
 local time = Discordia.Stopwatch()
 
 local ping = {}

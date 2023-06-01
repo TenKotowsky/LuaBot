@@ -1,21 +1,13 @@
+require("discordia-expanded")
 local embed = {}
 
 function embed:run(context)
     local message = context.Message
-    local channel = message.channel
     local args = context.Args
     if #args > 0 then
-        local finalString = ""
-        for i, v in pairs(context.Args) do
-            if i == 1 then
-                finalString = v
-            else
-                finalString = finalString.." "..v
-            end
-        end
-        channel:send{
+        message:reply{
             embed = {
-                description = finalString,
+                description = table.concat(args),
                 color = _G.MainColor.value
             }
         }

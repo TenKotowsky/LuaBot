@@ -1,3 +1,4 @@
+require("discordia-expanded")
 local randomnumber = {}
 
 function randomnumber:run(context)

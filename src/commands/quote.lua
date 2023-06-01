@@ -1,3 +1,4 @@
+require("discordia-expanded")
 local corohttp = require("coro-http")
 local json = require("json")
 
@@ -5,7 +6,6 @@ local quote = {}
 
 function quote:run(context)
     local message = context.Message
-	local channel = message.channel
 	local header = {
 		{"X-Api-Key", "HHRHB6I+UTHeeZJx1ZWNBA==17idOV9lboycNcUD"}
 	}
@@ -18,7 +18,7 @@ function quote:run(context)
 	end)
 
 	if finalQuoteData and finalQuoteData.quote then
-		channel:send(finalQuoteData.quote.."\n- "..finalQuoteData.author)
+		message:reply(finalQuoteData.quote.."\n- "..finalQuoteData.author)
 	else
 		print(res)
 		local quotes = {
@@ -31,7 +31,7 @@ function quote:run(context)
 			"The most hateful human misfortune is for a wise man to have no influence.\n- Herodotus",
 			"Be yourself; everyone else is already taken.\n- Oscar Wilde"
 		}
-		channel:send(quotes[math.random(1,#quotes)])
+		message:reply(quotes[math.random(1,#quotes)])
 	end
 end
 

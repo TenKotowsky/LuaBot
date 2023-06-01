@@ -1,3 +1,4 @@
+require("discordia-expanded")
 local corohttp = require("coro-http")
 local json = require("json")
 
@@ -5,7 +6,6 @@ local rhyme = {}
 
 function rhyme:run(context)
     local message = context.Message
-	local channel = message.channel
 	local header = {
 		{"X-Api-Key", "HHRHB6I+UTHeeZJx1ZWNBA==17idOV9lboycNcUD"},
 	}
@@ -32,7 +32,7 @@ function rhyme:run(context)
 			end
 		end
 		if #rhymes < 2048 then
-			channel:send {
+			message:reply {
 				embed = {
 					title = "Words that rhyme with "..context.Args[1],
 					description = rhymes,
@@ -40,14 +40,14 @@ function rhyme:run(context)
 				}
 			}
 		else
-			channel:send {
+			message:reply {
 				embed = {
 					title = "Words that rhyme with "..context.Args[1],
 					description = rhymes:sub(1, 2048),
 					color = _G.MainColor.value
 				}
 			}
-			channel:send {
+			message:reply {
 				embed = {
 					description = rhymes:sub(2049, #rhymes),
 					color = _G.MainColor.value

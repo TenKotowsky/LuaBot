@@ -1,3 +1,5 @@
+require("discordia-expanded")
+
 local avatar = {}
 
 function avatar:run(context)
@@ -10,7 +12,7 @@ function avatar:run(context)
 	else
 		return
 	end
-	message.channel:send {
+	message:reply {
 		embed = {
 			title = user.name.."'s avatar",
 			image = {url = user.avatarURL},

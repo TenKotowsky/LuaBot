@@ -1,3 +1,4 @@
+require("discordia-expanded")
 local eightball = {}
 
 local responses = {
@@ -24,7 +25,10 @@ local responses = {
 }
 
 function eightball:run(context)
-    context.Message:reply(responses[math.random(1, #responses)])
+    local msg, err = context.Message:reply(responses[math.random(1, #responses)])
+    if not msg then
+        print(err)
+    end
 end
 
 return eightball

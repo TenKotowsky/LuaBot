@@ -1,3 +1,4 @@
+require("discordia-expanded")
 local userinfo = {}
 
 function userinfo:run(context)
@@ -14,7 +15,7 @@ function userinfo:run(context)
 	if message.guild:getMember(user.id) then
 		local member = message.guild:getMember(user.id)
 		if member.nickname ~= nil then
-			message.channel:send {
+			message:reply {
 				embed = {
 					title = user.name,
 					thumbnail = {url = user.avatarURL},
@@ -28,7 +29,7 @@ function userinfo:run(context)
 				}
 			}
 		else
-			message.channel:send {
+			message:reply {
 				embed = {
 					title = user.name,
 					thumbnail = {url = user.avatarURL},
@@ -42,7 +43,7 @@ function userinfo:run(context)
 			}
 		end
 	else
-		message.channel:send {
+		message:reply {
 			embed = {
 				title = user.name,
 				thumbnail = {url = user.avatarURL},

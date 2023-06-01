@@ -1,3 +1,4 @@
+require("discordia-expanded")
 local corohttp = require("coro-http")
 local json = require("json")
 
@@ -36,7 +37,7 @@ function urbandict:run(context)
             definition = string.gsub(definition, v, "")
             example = string.gsub(example, v, "")
         end
-		channel:send{
+		message:reply{
             embed = {
                 title = term.." definition:",
                 description = definition,
@@ -48,7 +49,7 @@ function urbandict:run(context)
             }
         }
 	else
-		channel:send("An error occured when trying to get this term's definition!")
+		message:reply("An error occured when trying to get this term's definition!")
 	end
 end
 

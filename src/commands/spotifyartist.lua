@@ -1,3 +1,4 @@
+require("discordia-expanded")
 local Functions = require("../dependencies/Functions.lua")
 local BotData = require("../dependencies/BotData.lua")
 local corohttp = require("coro-http")
@@ -7,7 +8,6 @@ local spotifyartist = {}
 
 function spotifyartist:run(context)
     local message = context.Message
-	local channel = message.channel
 	local args = context.Args
 	local artistName = ""
 	for _, v in pairs(args) do
@@ -36,7 +36,7 @@ function spotifyartist:run(context)
 				for i, v in pairs(tracksData.tracks) do
 					table.insert(fieldsT, #fieldsT + 1, {name = "Top "..tostring(i).." track: ", value = v.name, inline = false})
 				end
-				channel:send {
+				message:reply {
 					embed = {
 						title = artistData.name,
 						url = artistData.external_urls.spotify,

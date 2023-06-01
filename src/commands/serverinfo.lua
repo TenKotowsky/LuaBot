@@ -1,3 +1,4 @@
+require("discordia-expanded")
 local serverinfo = {}
 function serverinfo:run(context)
     local message = context.Message
@@ -15,7 +16,7 @@ function serverinfo:run(context)
 		serverFeatures = "None"
 	end
 	if guild.description ~= nil then
-		message.channel:send {
+		message:reply {
 			embed = {
 				title = guild.name,
 				thumbnail = {url = guild.iconURL},
@@ -34,7 +35,7 @@ function serverinfo:run(context)
 			}
 		}
 	else
-		message.channel:send {
+		message:reply {
 			embed = {
 				title = guild.name,
 				thumbnail = {url = guild.iconURL},

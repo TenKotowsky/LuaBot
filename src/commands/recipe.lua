@@ -1,3 +1,4 @@
+require("discordia-expanded")
 local corohttp = require("coro-http")
 local json = require("json")
 
@@ -5,7 +6,6 @@ local recipe = {}
 
 function recipe:run(context)
     local message = context.Message
-	local channel = message.channel
 	local header = {
 		{"X-Api-Key", "HHRHB6I+UTHeeZJx1ZWNBA==17idOV9lboycNcUD"},
 	}
@@ -46,7 +46,7 @@ function recipe:run(context)
 				{name = "", value = finalRecipeData.instructions:sub(1025, #finalRecipeData.instructions), inline = false}
 			}
 		end
-		channel:send {
+		message:reply {
 			embed = {
 				title = finalRecipeData.title,
 				fields = fields,

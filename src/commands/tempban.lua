@@ -1,3 +1,4 @@
+require("discordia-expanded")
 local Functions = require("../dependencies/Functions.lua")
 local sqlite3 = require("sqlite3")
 local conn = sqlite3.open("DataBase.sqlite")

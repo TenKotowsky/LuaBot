@@ -1,3 +1,4 @@
+require("discordia-expanded")
 local Functions = require("../dependencies/Functions.lua")
 local BotData = require("../dependencies/BotData.lua")
 local corohttp = require("coro-http")
@@ -7,7 +8,6 @@ local spotifyalbum = {}
 
 function spotifyalbum:run(context)
     local message = context.Message
-	local channel = message.channel
 	local args = context.Args
 	local albumName = ""
 	for _, v in pairs(args) do
@@ -46,7 +46,7 @@ function spotifyalbum:run(context)
 				   table.insert(fieldsT, #fieldsT + 1, {name = i..". "..v.name.." ("..Functions.milliToHuman(v.duration_ms)..")", value = artists, inline = false})
 				end
 				if #fieldsT <= 25 then
-					channel:send {
+					message:reply {
 						embed = {
 							title = albumData.name,
 							url = albumData.external_urls.spotify,
@@ -56,7 +56,7 @@ function spotifyalbum:run(context)
 						}
 					}
 				else
-					channel:send {
+					message:reply {
 						embed = {
 							title = albumData.name,
 							url = albumData.external_urls.spotify,
@@ -71,7 +71,7 @@ function spotifyalbum:run(context)
 							table.insert(secondFieldsT, v)
 						end
 					end
-					channel:send {
+					message:reply {
 						embed = {
 							title = albumData.name,
 							url = albumData.external_urls.spotify,

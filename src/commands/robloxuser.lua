@@ -1,3 +1,4 @@
+require("discordia-expanded")
 local corohttp = require("coro-http")
 local json = require("json")
 
@@ -44,7 +45,7 @@ function robloxuser:run(context)
 				if data.hasVerifiedBadge then
 					verifiedMsg = "Verified"
 				end
-				context.Message.channel:send {
+				context.Message:reply {
 					embed = {
 						title = "Roblox user info",
 						description = data.displayName.." ("..data.name..")",
@@ -62,7 +63,7 @@ function robloxuser:run(context)
 				if data.hasVerifiedBadge then
 					verifiedMsg = "Verified"
 				end
-				context.Message.channel:send {
+				context.Message:reply {
 					embed = {
 						title = "Roblox user info",
 						description = data.displayName.." ("..data.name..")",

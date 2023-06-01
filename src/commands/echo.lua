@@ -1,9 +1,28 @@
+require("discordia-expanded")
 local echo = {}
 
 function echo:run(context)
+    local message = context.Message
     local args = context.Args
 
-    context.Message:reply(table.concat(args, " "))
+    if #args > 0 then
+        local finalString = ""
+        for i, v in pairs(context.Args) do
+            if v == "@everyone" then
+                v = "@​everyone"
+            elseif v == "@here" then
+                v = "@​here"
+            end
+            if i == 1 then
+                finalString = v
+            else
+                finalString = finalString.." "..v
+            end
+        end
+        message:reply(finalString)
+    else
+        message:reply("You haven't typed any text!")
+    end
 end
 
 return echo
