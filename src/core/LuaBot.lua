@@ -49,7 +49,7 @@ Client:on("messageCreate", function(message)
 
     if message.author.bot then
         return
-    elseif message.mentionedUsers.first == Client.user and #t == 1 then
+    elseif message.mentionedUsers.first == Client.user and #t == 1 and not message.referencedMessage then
         CommandHandler.Commands.help:Run(message, {})
     else
         CommandHandler.Parse(message, prefix)
