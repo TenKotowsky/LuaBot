@@ -30,6 +30,12 @@ function Commands.Ban(context)
 	ban:run(context)
 end
 
+local tempban = require("../commands/tempban.lua")
+function Commands.TempBan(context)
+	tempban:run(context)
+end
+
+
 local kick = require("../commands/kick.lua")
 function Commands.Kick(context)
 	kick:run(context)
@@ -68,6 +74,11 @@ end
 local questiontime = require("../commands/questiontime.lua")
 function Commands.QuestionTime(context)
 	questiontime:run(context)
+end
+
+local questioninfo = require("../commands/questioninfo.lua")
+function Commands.QuestionInfo(context)
+	questioninfo:run(context)
 end
 
 local ping = require("../commands/ping.lua")
@@ -128,6 +139,21 @@ end
 local eightball = require("../commands/eightball.lua")
 function Commands.EightBall(context)
 	eightball:run(context)
+end
+
+local epicgamesfree = require("../commands/epicgamesfree.lua")
+function Commands.EpicGamesFree(context)
+	epicgamesfree:run(context)
+end
+
+local patreon = require("../commands/patreon.lua")
+function Commands.Patreon(context)
+	patreon:run(context)
+end
+
+local emoji = require("../commands/emoji.lua")
+function Commands.Emoji(context)
+	emoji:run(context)
 end
 
 return Commands
