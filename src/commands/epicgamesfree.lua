@@ -8,7 +8,7 @@ function epicgamesfree:run(context)
     local message = context.Message
 
 	local headers = {
-        {"X-RapidAPI-Key", "6fa0aca9c6msh3039fbfebd58c14p1d7f0ejsn66b1abfbdcf9"},
+        {"X-RapidAPI-Key", "..."},
         {"X-RapidAPI-Host", "free-epic-games.p.rapidapi.com"}
     }
 
