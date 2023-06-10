@@ -37,7 +37,7 @@ function questionlist:run(context)
 				{name = "Amount of questions:", value = questionsAmount, inline = false},
 			}
 
-			if finalString <= 1024 then
+			if #finalString <= 1024 then
 				table.insert(fields, {name = "Questions: ", value = finalString, inline = false})
 			else
 				table.insert(fields, {name = "Questions: ", value = finalString:sub(1, 1024), inline = false})
@@ -47,10 +47,7 @@ function questionlist:run(context)
 			message:reply{
 				embed = {
 					title = "Question pool",
-					fields = {
-						{name = "Amount of questions:", value = questionsAmount, inline = false},
-						{name = "Questions: ", value = finalString, inline = false}
-					},
+					fields = fields,
 					color = _G.MainColor.value
 				}
 			}

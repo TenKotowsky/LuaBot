@@ -21,9 +21,9 @@ function questionremove:run(context)
 		end
 		local index = tonumber(index)
 		if index then
-			local row = conn:exec("SELECT * FROM periodicquestions WHERE rowid = '"..index.."'")
-			if row then
-				if guildId == row[1][1] then
+			local data = conn:exec("SELECT * FROM periodicquestions WHERE rowid = '"..index.."'")
+			if data then
+				if guildId == data[1][1] then
 					conn:exec("DELETE FROM periodicquestions WHERE rowid = '"..index.."';")
 					message:reply("Removed the question from the pool!")
 				else

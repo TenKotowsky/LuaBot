@@ -22,10 +22,11 @@ function help:run(context)
 			{name = "**Website:**", value = "https://tenkotowsky.github.io/", inline = false},
 			{name = "**You can upvote me here! <3:**", value = "https://discordbotlist.com/bots/luabot", inline = false},
 			{name = "**Server prefix:**", value = prefix, inline = false},
-			{name = "**General:**", value = "`help`, `patreon`, `ping`, `prefix [prefix]`, `serverinfo`, `userinfo [user]`, `avatar [user]`, `embed [text]`, `emoji [emoji]`", inline = false},
+			{name = "**General:**", value = "`help`, `patreon`, `ping`, `prefix [prefix]`, `serverinfo`, `userinfo [user]`, `avatar [user]`, `embed [text]`, `emoji [emoji]`, `remindme [time] [reminder]`, `reminders`", inline = false},
 			{name = "**Moderation:**", value = "`ban [user] [reason]`, `tempban [user] [hours] [reason]`, `kick [user]`, `slowmode [0-21600s]`", inline = false},
 			{name = "**[BETA] Periodic questions (QOTD/W):**", value = "`questioninfo`, `questionlist`, `questionperiod [day/week]`, `questionchannel [channel id]`, `questionadd [question]`, `questionremove [index]`, `questiontime [hour]`", inline = false},
-			{name = "**Gaming:**", value = "`epicgamesfree`, `robloxuser [username]`", inline = false},
+			{name = "**Actions:**", value = "`tickle [user]`, `pat [user]`, `hug [user]`, `cuddle [user]`, `kiss [user]`, `slap [user]`, `smack [user]`", inline = false},
+			{name = "**Gaming:**", value = "`epicgamesfree`, `steamuser [vanity name]`, `robloxuser [username]`", inline = false},
 			{name = "**4Fun:**", value = "`echo`, `eightball`, `quote`, `recipe [dish]`, `rhyme [word]`, `urbandict [term]`, `randomnumber [min] [max]`, `spotifyartist [name]`, `spotifyalbum [name]`", inline = false}
 		},
 		color = _G.MainColor.value
