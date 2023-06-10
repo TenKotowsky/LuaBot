@@ -10,7 +10,8 @@ local Functions = require("../dependencies/Functions.lua")
 
 _G.MainColor = Discordia.Color.fromHex("#000080")
 
---conn:exec("CREATE TABLE tempban(guildId TEXT, userId TEXT, time TEXT);")
+--conn:exec("CREATE TABLE reminders(userId TEXT, time TEXT, reminder TEXT);")
+--CREATE TABLE tempban(guildId TEXT, userId TEXT, time TEXT);
 --CREATE TABLE periodicquestionsconfig(guildId TEXT, period VARCHAR(5), channelId TEXT, time INTEGER, lastTimeSent INTEGER);
 --CREATE TABLE periodicquestions(guildId TEXT, question TEXT);
 
@@ -34,6 +35,12 @@ Client:on("ready", function()
 end)
 
 Client:on("messageCreate", function(message)
+	if message.channel.type > 4 then
+		print(message.channel.type)
+	end
+	if not message.guild then
+		return
+	end
     local prefix
 	local prefixData = conn:exec("SELECT prefix FROM serverconfig WHERE guildId = '"..message.guild.id.."';")
 	if prefixData == nil then
@@ -107,16 +114,55 @@ Client:on("heartbeat", function(shardId, latency)
 	if tempbans ~= nil then
 		for i, v in ipairs(tempbans) do
 			-- v[1] - rowid
+			local row = tonumber(v[1])
 
 			local success, res = pcall(function()
-				local timeToBan = conn:exec("SELECT time FROM tempban WHERE rowid = '"..v[1].."'")
+				local timeToBan = conn:exec("SELECT time FROM tempban WHERE rowid = '"..row.."'")
 				if tonumber(timeToBan[1][1]) and os.time() >= tonumber(timeToBan[1][1]) then
-					local userIdData = conn:exec("SELECT userId FROM tempban WHERE rowid = '"..v[1].."'")
+					local userIdData = conn:exec("SELECT userId FROM tempban WHERE rowid = '"..row.."'")
 					local userId = userIdData[1][1]
-					conn:exec("DELETE FROM tempban WHERE rowid = " .. tonumber(v[1]) .. ";")
-					local guildIdData = conn:exec("SELECT guildId FROM tempban WHERE rowid = '"..v[1].."'")
+					conn:exec("DELETE FROM tempban WHERE rowid = " .. row .. ";")
+					local guildIdData = conn:exec("SELECT guildId FROM tempban WHERE rowid = '"..row.."'")
 					local guild = Client:getGuild(guildIdData[1][1])
 					guild:unbanUser(userId)
+				end
+			end)
+			if not success then print(res) end
+		end
+	end
+	local reminders = conn:exec("SELECT rowid FROM reminders")
+	if reminders ~= nil then
+		for i, v in ipairs(reminders) do
+			-- v[1] - rowid
+			local row = tonumber(v[1])
+
+			local success, res = pcall(function()
+				local timeToRemind = conn:exec("SELECT time FROM reminders WHERE rowid = '"..row.."'")
+				if tonumber(timeToRemind[1][1]) and os.time() >= tonumber(timeToRemind[1][1]) then
+					local userIdData = conn:exec("SELECT userId FROM reminders WHERE rowid = '"..row.."'")
+					local userId = userIdData[1][1]
+					local user
+					pcall(function()
+						user = Client:getUser(userId)
+					end)
+					if not user then
+						--retry
+						pcall(function()
+							user = Client:getUser(userId)
+						end)
+						if not user then
+							return
+						end
+					end
+					local reminderContent = conn:exec("SELECT reminder FROM reminders WHERE rowid = '"..row.."'")[1][1]
+					conn:exec("DELETE FROM reminders WHERE rowid = "..row..";")
+					user:send{
+						embed = {
+							title = "Reminder",
+							description = reminderContent,
+							color = _G.MainColor.value
+						}
+					}
 				end
 			end)
 			if not success then print(res) end
