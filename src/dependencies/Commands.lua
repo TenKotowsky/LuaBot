@@ -35,7 +35,6 @@ function Commands.TempBan(context)
 	tempban:run(context)
 end
 
-
 local kick = require("../commands/kick.lua")
 function Commands.Kick(context)
 	kick:run(context)
@@ -146,6 +145,11 @@ function Commands.EpicGamesFree(context)
 	epicgamesfree:run(context)
 end
 
+local steamuser = require("../commands/steamuser.lua")
+function Commands.SteamUser(context)
+	steamuser:run(context)
+end
+
 local patreon = require("../commands/patreon.lua")
 function Commands.Patreon(context)
 	patreon:run(context)
@@ -154,6 +158,50 @@ end
 local emoji = require("../commands/emoji.lua")
 function Commands.Emoji(context)
 	emoji:run(context)
+end
+
+local remindme = require("../commands/remindme.lua")
+function Commands.RemindMe(context)
+	remindme:run(context)
+end
+
+local reminders = require("../commands/reminders.lua")
+function Commands.Reminders(context)
+	reminders:run(context)
+end
+
+local removereminder = require("../commands/removereminder.lua")
+function Commands.RemoveReminder(context)
+	removereminder:run(context)
+end
+
+local tickle = require("../commands/tickle.lua")
+function Commands.Tickle(context)
+	tickle:run(context)
+end
+local pat = require("../commands/pat.lua")
+function Commands.Pat(context)
+	pat:run(context)
+end
+local hug = require("../commands/hug.lua")
+function Commands.Hug(context)
+	hug:run(context)
+end
+local cuddle = require("../commands/cuddle.lua")
+function Commands.Cuddle(context)
+	cuddle:run(context)
+end
+local kiss = require("../commands/kiss.lua")
+function Commands.Kiss(context)
+	kiss:run(context)
+end
+local slap = require("../commands/slap.lua")
+function Commands.Slap(context)
+	slap:run(context)
+end
+local smack = require("../commands/smack.lua")
+function Commands.Smack(context)
+	smack:run(context)
 end
 
 return Commands
