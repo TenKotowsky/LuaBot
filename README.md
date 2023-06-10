@@ -7,7 +7,7 @@ It uses [Discordia](https://github.com/SinisterRectus/Discordia) - a Discord API
 
 
 ### It also makes a use of a few extensions and libraries:
-- [Discordia extension called discordia-expanded](https://github.com/Be1zebub/Discordia-Expanded)
+- [discordia-expanded](https://github.com/Be1zebub/Discordia-Expanded)
 - [coro-http](https://github.com/luvit/lit/blob/master/deps/coro-http.lua)
 - [lit-sqlite3](https://github.com/SinisterRectus/lit-sqlite3)
 - [json](https://github.com/luvit/lit/blob/master/deps/json.lua)
