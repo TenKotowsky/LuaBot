@@ -152,6 +152,26 @@ function Functions.convertToHours(time)
 	return hours
 end
 
+function Functions.convertToMinutes(time)
+	local minutes
+	if time then
+		if tonumber(time) then
+			minutes = time
+		elseif time:sub(#time, #time) == "m" then
+			minutes = tonumber(time:sub(1, #time - 1))
+		elseif time:sub(#time, #time) == "h" then
+			minutes = tonumber(time:sub(1, #time - 1)) * 60
+		elseif time:sub(#time, #time) == "d" then
+			minutes = tonumber(time:sub(1, #time - 1)) * 1440
+		elseif time:sub(#time, #time) == "w" then
+			minutes = tonumber(time:sub(1, #time - 1)) * 10080
+		end
+	else
+		return nil
+	end
+	return minutes
+end
+
 function Functions.splitString(inputstr, sep)
 	if sep == nil then
 		sep = "%s"
