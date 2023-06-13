@@ -22,7 +22,7 @@ function help:run(context)
 			{name = "**Website:**", value = "https://tenkotowsky.github.io/", inline = false},
 			{name = "**You can upvote me here! <3:**", value = "https://discordbotlist.com/bots/luabot", inline = false},
 			{name = "**Server prefix:**", value = prefix, inline = false},
-			{name = "**General:**", value = "`help`, `patreon`, `ping`, `prefix [prefix]`, `serverinfo`, `userinfo [user]`, `avatar [user]`, `embed [text]`, `emoji [emoji]`, `reminders`, `remindme [time] [reminder]`, `removereminder [id]", inline = false},
+			{name = "**General:**", value = "`help`, `patreon`, `ping`, `prefix [prefix]`, `serverinfo`, `userinfo [user]`, `avatar [user]`, `embed [text]`, `emoji [emoji]`, `reminders`, `remindme [time] [reminder]`, `removereminder [id]`", inline = false},
 			{name = "**Moderation:**", value = "`ban [user] [reason]`, `tempban [user] [hours] [reason]`, `kick [user]`, `slowmode [0-21600s]`", inline = false},
 			{name = "**[BETA] Periodic questions (QOTD/W):**", value = "`questioninfo`, `questionlist`, `questionperiod [day/week]`, `questionchannel [channel id]`, `questionadd [question]`, `questionremove [id]`, `questiontime [hour]`", inline = false},
 			{name = "**Actions:**", value = "`tickle [user]`, `pat [user]`, `hug [user]`, `cuddle [user]`, `kiss [user]`, `slap [user]`, `smack [user]`", inline = false},
