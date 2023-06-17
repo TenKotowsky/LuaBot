@@ -5,5 +5,6 @@ botData.Prefix = "lua"
 botData.SpotifyClientId = "..."
 botData.SpotifySecret = "..."
 botData.SteamKey = "..."
+botData.RiotKey = "..."
 
 return botData
