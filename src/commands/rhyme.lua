@@ -7,7 +7,7 @@ local rhyme = {}
 function rhyme:run(context)
     local message = context.Message
 	local header = {
-		{"X-Api-Key", "HHRHB6I+UTHeeZJx1ZWNBA==17idOV9lboycNcUD"},
+		{"X-Api-Key", "..."},
 	}
 
 	if #context.Args == 0 then
