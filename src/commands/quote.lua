@@ -7,7 +7,7 @@ local quote = {}
 function quote:run(context)
     local message = context.Message
 	local header = {
-		{"X-Api-Key", "HHRHB6I+UTHeeZJx1ZWNBA==17idOV9lboycNcUD"}
+		{"X-Api-Key", "..."}
 	}
 
 	local res, quoteData = corohttp.request("GET", "https://api.api-ninjas.com/v1/quotes", header)
