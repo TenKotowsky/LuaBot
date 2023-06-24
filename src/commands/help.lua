@@ -20,14 +20,14 @@ function help:run(context)
 		description = "LuaBot is a multi-purpose Discord bot equipped with moderation tools, community managment tools and other features!",
 		fields = {
 			{name = "**Website:**", value = "https://tenkotowsky.github.io/", inline = false},
-			{name = "**You can upvote me here! <3:**", value = "https://discordbotlist.com/bots/luabot", inline = false},
+			{name = "**You can upvote me here! <3:**", value = "https://top.gg/bot/1103273590280949800", inline = false},
 			{name = "**Server prefix:**", value = prefix, inline = false},
 			{name = "**General:**", value = "`help`, `patreon`, `ping`, `prefix [prefix]`, `serverinfo`, `userinfo [user]`, `avatar [user]`, `embed [text]`, `emoji [emoji]`, `reminders`, `remindme [time] [reminder]`, `removereminder [id]`", inline = false},
-			{name = "**Moderation:**", value = "`ban [user] [reason]`, `tempban [user] [hours] [reason]`, `kick [user]`, `slowmode [0-21600s]`", inline = false},
+			{name = "**Moderation:**", value = "`ban [user] [reason]`, `tempban [user] [time] [reason]`, `kick [user]`, `mute [user] [time]`, `slowmode [time]`", inline = false},
 			{name = "**[BETA] Periodic questions (QOTD/W):**", value = "`questioninfo`, `questionlist`, `questionperiod [day/week]`, `questionchannel [channel id]`, `questionadd [question]`, `questionremove [id]`, `questiontime [hour]`", inline = false},
 			{name = "**Actions:**", value = "`tickle [user]`, `pat [user]`, `hug [user]`, `cuddle [user]`, `kiss [user]`, `slap [user]`, `smack [user]`", inline = false},
-			{name = "**Gaming:**", value = "`epicgamesfree`, `steamuser [vanity name]`, `robloxuser [username]`", inline = false},
-			{name = "**4Fun:**", value = "`echo`, `eightball`, `quote`, `recipe [dish]`, `rhyme [word]`, `urbandict [term]`, `randomnumber [min] [max]`, `spotifyartist [name]`, `spotifyalbum [name]`", inline = false}
+			{name = "**Gaming:**", value = "`epicgamesfree`, `steamuser [vanity name]`, `lolprofile [region] [summoner name]`, `robloxuser [username]`", inline = false},
+			{name = "**4Fun:**", value = "`echo`, `eightball`, `quote`, `recipe [dish]`, `rhyme [word]`, `urbandict [term]`, `rps [rock/paper/scissors]`, `randomnumber [min] [max]`, `spotifyartist [name]`, `spotifyalbum [name]`", inline = false}
 		},
 		color = _G.MainColor.value
 	}

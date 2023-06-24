@@ -8,7 +8,7 @@ function epicgamesfree:run(context)
     local message = context.Message
 
 	local headers = {
-        {"X-RapidAPI-Key", "..."},
+        {"X-RapidAPI-Key", "6fa0aca9c6msh3039fbfebd58c14p1d7f0ejsn66b1abfbdcf9"},
         {"X-RapidAPI-Host", "free-epic-games.p.rapidapi.com"}
     }
 
@@ -22,7 +22,11 @@ function epicgamesfree:run(context)
 	if finalFreeGamesData and finalFreeGamesData.current then
         local fields = {}
         for i, v in pairs(finalFreeGamesData.current) do
-            table.insert(fields, {name = v.title, value = v.description.."\n".."https://store.epicgames.com/en-US/p/"..v.productSlug, inline = false})
+            if v.productSlug then
+                table.insert(fields, {name = v.title, value = v.description.."\nhttps://store.epicgames.com/en-US/p/"..v.productSlug, inline = false})
+            else
+                table.insert(fields, {name = v.title, value = v.description, inline = false})
+            end
         end
         local offerImageWideUrl = "https://cdn1.epicgames.com/offer/d5241c76f178492ea1540fce45616757/egs-vault-tease-generic-promo-1920x1080_1920x1080-f7742c265e217510835ed14e04c48b4b"
         for i, v in pairs(finalFreeGamesData.current[1].keyImages) do

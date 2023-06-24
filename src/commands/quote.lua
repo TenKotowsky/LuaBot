@@ -1,4 +1,5 @@
 require("discordia-expanded")
+local BotData = require("../dependencies/BotData.lua")
 local corohttp = require("coro-http")
 local json = require("json")
 
@@ -7,7 +8,7 @@ local quote = {}
 function quote:run(context)
     local message = context.Message
 	local header = {
-		{"X-Api-Key", "..."}
+		{"X-Api-Key", BotData.ApiNinjasKey}
 	}
 
 	local res, quoteData = corohttp.request("GET", "https://api.api-ninjas.com/v1/quotes", header)

@@ -1,13 +1,14 @@
 require("discordia-expanded")
 local corohttp = require("coro-http")
 local json = require("json")
+local BotData = require("../dependencies/BotData.lua")
 
 local recipe = {}
 
 function recipe:run(context)
     local message = context.Message
 	local header = {
-		{"X-Api-Key", "..."},
+		{"X-Api-Key", BotData.ApiNinjasKey},
 	}
 
 	if #context.Args == 0 then

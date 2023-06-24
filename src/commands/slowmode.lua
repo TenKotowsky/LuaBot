@@ -9,9 +9,12 @@ function slowmode:run(context)
 
 	local channel = message.channel
 	local limit
-	if limitArg and tonumber(limitArg) then
-		limit = tonumber(limitArg)
-		if limit > 21600 then
+	if limitArg then
+		limit = Functions.convertToSeconds(limitArg)
+		if not limit then
+			message:reply("Specify slowmode duration properly!")
+			return
+		elseif limit > 21600 then
 			limit = 21600
 		end
 	else
@@ -21,6 +24,7 @@ function slowmode:run(context)
 
 	local author = message.guild:getMember(message.author.id)
 	if Functions.basicChecks(message, "manageChannels", author, true) == false then
+		message:reply("You don't have the Manage Channels permission!")
 		return
 	end
 
