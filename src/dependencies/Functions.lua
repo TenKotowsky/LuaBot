@@ -133,44 +133,65 @@ function Functions.printTable(tbl, indent)
 end
 
 function Functions.convertToHours(time)
-	local hours
+	local hours = nil
 	if time then
-		if tonumber(time) then
-			hours = time
-		elseif time:sub(#time, #time) == "h" then
-			hours = tonumber(time:sub(1, #time - 1))
-		elseif time:sub(#time, #time) == "d" then
-			hours = tonumber(time:sub(1, #time - 1)) * 24
-		elseif time:sub(#time, #time) == "w" then
-			hours = tonumber(time:sub(1, #time - 1)) * 168
-		elseif time:sub(#time, #time) == "m" then
-			hours = tonumber(time:sub(1, #time - 1)) * 720
-		end
-	else
-		return nil
+		pcall(function()
+			if tonumber(time) then
+				hours = time
+			elseif time:sub(#time, #time) == "h" then
+				hours = tonumber(time:sub(1, #time - 1))
+			elseif time:sub(#time, #time) == "d" then
+				hours = tonumber(time:sub(1, #time - 1)) * 24
+			elseif time:sub(#time, #time) == "w" then
+				hours = tonumber(time:sub(1, #time - 1)) * 168
+			elseif time:sub(#time, #time) == "m" then
+				hours = tonumber(time:sub(1, #time - 1)) * 720
+			end
+		end)
 	end
 	return hours
 end
 
 function Functions.convertToMinutes(time)
-	local minutes
+	local minutes = nil
 	if time then
-		if tonumber(time) then
-			minutes = time
-		elseif time:sub(#time, #time) == "m" then
-			minutes = tonumber(time:sub(1, #time - 1))
-		elseif time:sub(#time, #time) == "h" then
-			minutes = tonumber(time:sub(1, #time - 1)) * 60
-		elseif time:sub(#time, #time) == "d" then
-			minutes = tonumber(time:sub(1, #time - 1)) * 1440
-		elseif time:sub(#time, #time) == "w" then
-			minutes = tonumber(time:sub(1, #time - 1)) * 10080
-		end
-	else
-		return nil
+		pcall(function()
+			if tonumber(time) then
+				minutes = time
+			elseif time:sub(#time, #time) == "m" then
+				minutes = tonumber(time:sub(1, #time - 1))
+			elseif time:sub(#time, #time) == "h" then
+				minutes = tonumber(time:sub(1, #time - 1)) * 60
+			elseif time:sub(#time, #time) == "d" then
+				minutes = tonumber(time:sub(1, #time - 1)) * 1440
+			elseif time:sub(#time, #time) == "w" then
+				minutes = tonumber(time:sub(1, #time - 1)) * 10080
+			end
+		end)
 	end
 	return minutes
 end
+
+function Functions.convertToSeconds(time)
+	local seconds = nil
+	if time then
+		pcall(function()
+			if tonumber(time) then
+				seconds = tonumber(time)
+			elseif time:sub(#time, #time) == "s" then
+				seconds = tonumber(time:sub(1, #time - 1))
+			elseif time:sub(#time, #time) == "m" then
+				seconds = tonumber(time:sub(1, #time - 1)) * 60
+			elseif time:sub(#time, #time) == "h" then
+				seconds = tonumber(time:sub(1, #time - 1)) * 3600
+			elseif time:sub(#time, #time) == "d" then
+				seconds = tonumber(time:sub(1, #time - 1)) * 86400
+			end
+		end)
+	end
+	return seconds
+end
+
 
 function Functions.splitString(inputstr, sep)
 	if sep == nil then
@@ -200,5 +221,11 @@ function Functions.is_url_image(image_url)
 	end
 	return false
 end
+
+function Functions.set(list)
+	local set = {}
+	for _, l in ipairs(list) do set[l] = true end
+	return set
+  end
 
 return Functions
