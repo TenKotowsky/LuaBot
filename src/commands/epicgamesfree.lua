@@ -1,4 +1,4 @@
-require("discordia-expanded")
+local BotData = require("../dependencies/BotData.lua")
 local corohttp = require("coro-http")
 local json = require("json")
 
@@ -8,7 +8,7 @@ function epicgamesfree:run(context)
     local message = context.Message
 
 	local headers = {
-        {"X-RapidAPI-Key", "..."},
+        {"X-RapidAPI-Key", BotData.RapidApiKey},
         {"X-RapidAPI-Host", "free-epic-games.p.rapidapi.com"}
     }
 
@@ -36,12 +36,19 @@ function epicgamesfree:run(context)
             end
         end
 
-		message:reply{embed = {
-            title = "Current free games on Epic Games Store:",
-            fields = fields,
-            image = {url = offerImageWideUrl},
-            color = _G.MainColor.value
-        }}
+		message:reply{
+            embed = {
+                title = "Current free games on Epic Games Store:",
+                fields = fields,
+                image = {url = offerImageWideUrl},
+                timestamp = Discordia.Date():toISO('T', 'Z'),
+                color = _G.MainColor.value
+            },
+			reference = {
+				message = message,
+				mention = false
+			}
+        }
 
         if finalFreeGamesData.upcoming[1] ~= nil then
         local upcomingFields = {}
@@ -62,15 +69,28 @@ function epicgamesfree:run(context)
             end
         end
 
-        message:reply{embed = {
-            title = "Upcoming free games on Epic Games Store:",
-            fields = upcomingFields,
-            image = {url = upcomingOfferImageWideUrl},
-            color = _G.MainColor.value
-        }}
+        message:reply{
+            embed = {
+                title = "Upcoming free games on Epic Games Store:",
+                fields = upcomingFields,
+                image = {url = upcomingOfferImageWideUrl},
+                timestamp = Discordia.Date():toISO('T', 'Z'),
+                color = _G.MainColor.value
+            },
+			reference = {
+				message = message,
+				mention = false
+			}
+        }
         end
 	else
-		message:reply("An error occured!")
+		message:reply{
+            content = "An error occured!",
+			reference = {
+				message = message,
+				mention = false
+			}
+        }
 	end
 end
 

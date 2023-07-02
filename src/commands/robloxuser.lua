@@ -1,10 +1,10 @@
-require("discordia-expanded")
 local corohttp = require("coro-http")
 local json = require("json")
 
 local robloxuser = {}
 
 function robloxuser:run(context)
+	local message = context.Message
     if context.Args and context.Args[1] then
 		--general info
 		local infobody = {
@@ -25,7 +25,13 @@ function robloxuser:run(context)
 		local finalData = json.decode(body).data
 
 		if not finalData[1] then
-			context.Message:reply("Couldn't find such user!")
+			context.Message:reply{
+				content = "Couldn't find such user!",
+				reference = {
+					message = message,
+					mention = false
+				}
+			}
 			return
 		end
 		
@@ -54,7 +60,12 @@ function robloxuser:run(context)
 							{name = "Verification status:", value = verifiedMsg, inline = false},
 							{name = "User ID:", value = data.id, inline = false}
 						},
+						timestamp = Discordia.Date():toISO('T', 'Z'),
 						color = _G.MainColor.value
+					},
+					reference = {
+						message = message,
+						mention = false
 					}
 				}
 			else
@@ -71,7 +82,12 @@ function robloxuser:run(context)
 							{name = "Verification status:", value = verifiedMsg, inline = false},
 							{name = "User ID:", value = data.id, inline = false}
 						},
+						timestamp = Discordia.Date():toISO('T', 'Z'),
 						color = _G.MainColor.value
+					},
+					reference = {
+						message = message,
+						mention = false
 					}
 				}
 			end

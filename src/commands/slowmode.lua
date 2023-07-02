@@ -1,4 +1,3 @@
-require("discordia-expanded")
 local Functions = require("../dependencies/Functions.lua")
 
 local slowmode = {}
@@ -12,19 +11,37 @@ function slowmode:run(context)
 	if limitArg then
 		limit = Functions.convertToSeconds(limitArg)
 		if not limit then
-			message:reply("Specify slowmode duration properly!")
+			message:reply{
+				content = "Specify slowmode duration properly!",
+				reference = {
+					message = message,
+					mention = false
+				}
+			}
 			return
 		elseif limit > 21600 then
 			limit = 21600
 		end
 	else
-		message:reply("Please specify slowmode's duration in seconds!")
+		message:reply{
+			content = "Please specify slowmode's duration in seconds!",
+			reference = {
+				message = message,
+				mention = false
+			}
+		}
 		return
 	end
 
 	local author = message.guild:getMember(message.author.id)
 	if Functions.basicChecks(message, "manageChannels", author, true) == false then
-		message:reply("You don't have the Manage Channels permission!")
+		message:reply{
+			content = "You don't have the Manage Channels permission!",
+			reference = {
+				message = message,
+				mention = false
+			}
+		}
 		return
 	end
 
@@ -32,9 +49,21 @@ function slowmode:run(context)
 		channel:setRateLimit(limit)
 		local convertedSeconds = Functions.secondsToHMS(limit)
 		if convertedSeconds == "0 seconds" then
-			message:reply("Disabled current channel's slowmode")
+			message:reply{
+				content = "Disabled current channel's slowmode",
+				reference = {
+					message = message,
+					mention = false
+				}
+			}
 		else
-			message:reply("Changed current channel's slowmode to **"..convertedSeconds.."**")
+			message:reply{
+				context = "Changed current channel's slowmode to **"..convertedSeconds.."**",
+				reference = {
+					message = message,
+					mention = false
+				}
+			}
 		end
 	end
 end

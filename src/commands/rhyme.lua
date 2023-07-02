@@ -1,4 +1,3 @@
-require("discordia-expanded")
 local corohttp = require("coro-http")
 local json = require("json")
 local BotData = require("../dependencies/BotData.lua")
@@ -12,7 +11,13 @@ function rhyme:run(context)
 	}
 
 	if #context.Args == 0 then
-		message:reply("Specify the word for which you want to see rhymes!")
+		message:reply{
+			content = "Specify the word for which you want to see rhymes!",
+			reference = {
+				message = message,
+				mention = false
+			}
+		}
 		return
 	end
 
@@ -37,7 +42,12 @@ function rhyme:run(context)
 				embed = {
 					title = "Words that rhyme with "..context.Args[1],
 					description = rhymes,
+					timestamp = Discordia.Date():toISO('T', 'Z'),
 					color = _G.MainColor.value
+				},
+				reference = {
+					message = message,
+					mention = false
 				}
 			}
 		else
@@ -46,11 +56,16 @@ function rhyme:run(context)
 					title = "Words that rhyme with "..context.Args[1],
 					description = rhymes:sub(1, 2048),
 					color = _G.MainColor.value
+				},
+				reference = {
+					message = message,
+					mention = false
 				}
 			}
 			message:reply {
 				embed = {
 					description = rhymes:sub(2049, #rhymes),
+					timestamp = Discordia.Date():toISO('T', 'Z'),
 					color = _G.MainColor.value
 				}
 			}

@@ -1,5 +1,3 @@
-require("discordia-expanded")
-
 local avatar = {}
 
 function avatar:run(context)
@@ -17,7 +15,12 @@ function avatar:run(context)
 		embed = {
 			title = user.name.."'s avatar",
 			image = {url = user.avatarURL},
+			timestamp = Discordia.Date():toISO('T', 'Z'),
 			color = _G.MainColor.value
+		},
+		reference = {
+			message = message,
+			mention = false
 		}
 	}
 end

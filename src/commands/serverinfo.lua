@@ -1,5 +1,7 @@
-require("discordia-expanded")
+local Functions = require("../dependencies/Functions.lua")
+
 local serverinfo = {}
+
 function serverinfo:run(context)
     local message = context.Message
 	local guild = message.guild
@@ -7,9 +9,9 @@ function serverinfo:run(context)
 	if #guild.features ~= 0 then
 		for i, v in pairs(guild.features) do
 			if i == 1 then
-				serverFeatures = v:gsub("_", "")
+				serverFeatures = Functions.firstCharToUpper(string.lower(v:gsub("_", "")))
 			else
-				serverFeatures  = serverFeatures.."\n"..v
+				serverFeatures  = serverFeatures.."\n"..Functions.firstCharToUpper(string.lower(v:gsub("_", "")))
 			end
 		end
 	else
@@ -31,7 +33,12 @@ function serverinfo:run(context)
 					{name = "**Server ID:**", value = guild.id, inline = true},
 					{name = "**Server Features:**", value = serverFeatures, inline = false}
 				},
+				timestamp = Discordia.Date():toISO('T', 'Z'),
 				color = _G.MainColor.value
+			},
+			reference = {
+				message = message,
+				mention = false
 			}
 		}
 	else
@@ -49,7 +56,12 @@ function serverinfo:run(context)
 					{name = "**Server ID:**", value = guild.id, inline = true},
 					{name = "**Server Features:**", value = serverFeatures, inline = false}
 				},
+				timestamp = Discordia.Date():toISO('T', 'Z'),
 				color = _G.MainColor.value
+			},
+			reference = {
+				message = message,
+				mention = false
 			}
 		}
 	end

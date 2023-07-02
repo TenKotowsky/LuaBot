@@ -1,5 +1,3 @@
-require("discordia-expanded")
-
 local patreon = {}
 
 function patreon:run(context)
@@ -9,10 +7,20 @@ function patreon:run(context)
 		fields = {
 			{name = "**Patreon:**", value = "https://www.patreon.com/LuaBot", inline = false},
 		},
+		timestamp = Discordia.Date():toISO('T', 'Z'),
 		color = _G.MainColor.value
 	}
 
-    context.Message:reply{embed = embed}
+    local message, err = context.Message:reply{
+		embed = embed,
+		reference = {
+			message = context.Message,
+			mention = false
+		}
+	}
+	if not message then
+		print(err) -- see what the error message is
+	end
 end
 
 return patreon

@@ -1,5 +1,4 @@
 local Functions = require("../dependencies/Functions.lua")
-require("discordia-expanded")
 
 local emoji = {}
 
@@ -19,19 +18,37 @@ function emoji:run(context)
     end
 
     if url == nil or emojiId == nil then
-        message:reply("this is not a proper emoji")
+        message:reply{
+            content = "This is not a proper emoji",
+			reference = {
+				message = message,
+				mention = false
+			}
+        }
         return
     elseif not Functions.is_url_image(url) then
         if Functions.is_url_image("https://cdn.discordapp.com/emojis/"..emojiId..".png") then
             url = "https://cdn.discordapp.com/emojis/"..emojiId..".png"
         else
-            message:reply("this is not a proper emoji")
+            message:reply{
+                content = "This is not a proper emoji",
+                reference = {
+                    message = message,
+                    mention = false
+                }
+            }
             return
         end
     end
 
     if emojiname == nil then
-        message:reply("This is not a proper emoji")
+        message:reply{
+            content = "This is not a proper emoji",
+			reference = {
+				message = message,
+				mention = false
+			}
+        }
         return
     end
 
@@ -44,10 +61,15 @@ function emoji:run(context)
 		title = "Enlarged emoji",
         description = emojiname..description,
 		image = {url = url},
+        timestamp = Discordia.Date():toISO('T', 'Z'),
 		color = _G.MainColor.value
 	}
     message:reply{
-        embed = embed
+        embed = embed,
+        reference = {
+            message = message,
+            mention = false
+        }
     }
 end
 

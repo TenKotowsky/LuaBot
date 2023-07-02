@@ -1,4 +1,3 @@
-require("discordia-expanded")
 local corohtpp = require("coro-http")
 local json = require("json")
 
@@ -17,12 +16,17 @@ function smack:run(context)
     if success == false then
         print(res)
     else
-        message.channel:send{
+        message:reply{
             embed = {
                 title = "**"..author.name.." smacks "..mentionedUser.name.."!**",
                 image = {url = gifInfo.url},
+                timestamp = Discordia.Date():toISO('T', 'Z'),
                 color = _G.MainColor.value
-            }
+            },
+			reference = {
+				message = message,
+				mention = false
+			}
         }
     end
 end

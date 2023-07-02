@@ -1,4 +1,3 @@
-require("discordia-expanded")
 local Functions = require("../dependencies/Functions.lua")
 
 local rps = {}
@@ -15,12 +14,24 @@ local choices = {
 function rps:run(context)
     local message = context.Message
     if not context.Args[1] then
-        message:reply("You have to choose between rock, paper and scissors!")
+        message:reply{
+            content = "You have to choose between rock, paper and scissors!",
+			reference = {
+				message = message,
+				mention = false
+			}
+        }
         return
     else
         local choice = context.Args[1]:lower()
         if not choices[choice] then
-            message:reply("You have to choose between rock, paper and scissors!")
+            message:reply{
+                content = "You have to choose between rock, paper and scissors!",
+                reference = {
+                    message = message,
+                    mention = false
+                }
+            }
             return
         end
         local description = ""
@@ -41,8 +52,13 @@ function rps:run(context)
             embed = {
                 title = "I choose... "..botChosen,
                 description = description,
+                timestamp = Discordia.Date():toISO('T', 'Z'),
                 color = _G.MainColor.value
-            }
+            },
+			reference = {
+				message = message,
+				mention = false
+			}
         }
     end
 end

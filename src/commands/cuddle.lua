@@ -1,4 +1,3 @@
-require("discordia-expanded")
 local corohtpp = require("coro-http")
 local json = require("json")
 
@@ -21,8 +20,13 @@ function cuddle:run(context)
             embed = {
                 title = "**"..author.name.." cuddles "..mentionedUser.name.."!**",
                 image = {url = gifInfo.url},
+                timestamp = Discordia.Date():toISO('T', 'Z'),
                 color = _G.MainColor.value
-            }
+            },
+			reference = {
+				message = message,
+				mention = false
+			}
         }
     end
 end

@@ -1,4 +1,3 @@
-require("discordia-expanded")
 local randomnumber = {}
 
 function randomnumber:run(context)
@@ -12,7 +11,13 @@ function randomnumber:run(context)
 			number1 = 1000000000000
 		end
 	else
-		message:reply("Enter a valid minimum number!")
+		message:reply{
+			context = "Enter a valid minimum number!",
+			reference = {
+				message = message,
+				mention = false
+			}
+		}
 		return
 	end
 
@@ -23,11 +28,23 @@ function randomnumber:run(context)
 			number2 = 1000000000000
 		end
 	else
-		message:reply("Enter a valid maximum number!")
+		message:reply{
+			content = "Enter a valid maximum number!",
+			reference = {
+				message = message,
+				mention = false
+			}
+		}
 		return
 	end
 
-	message:reply(math.random(number1, number2))
+	message:reply{
+		content = math.random(number1, number2),
+		reference = {
+			message = message,
+			mention = false
+		}
+	}
 end
 
 return randomnumber

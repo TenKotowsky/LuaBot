@@ -1,4 +1,3 @@
-require("discordia-expanded")
 local corohttp = require("coro-http")
 local json = require("json")
 local BotData = require("../dependencies/BotData.lua")
@@ -12,7 +11,13 @@ function recipe:run(context)
 	}
 
 	if #context.Args == 0 then
-		message:reply("Specify what you want to see a recipe for!")
+		message:reply{
+			content = "Specify what you want to see a recipe for!",
+			reference = {
+				message = message,
+				mention = false
+			}
+		}
 		return
 	end
 	local searchTerm = ""
@@ -51,11 +56,22 @@ function recipe:run(context)
 			embed = {
 				title = finalRecipeData.title,
 				fields = fields,
+				timestamp = Discordia.Date():toISO('T', 'Z'),
 				color = _G.MainColor.value
+			},
+			reference = {
+				message = message,
+				mention = false
 			}
 		}
 	else
-		message:reply("Couldn't find a recipe for that!")
+		message:reply{
+			content = "Couldn't find a recipe for that!",
+			reference = {
+				message = message,
+				mention = false
+			}
+		}
 	end
 end
 

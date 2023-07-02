@@ -1,4 +1,3 @@
-require("discordia-expanded")
 local corohttp = require("coro-http")
 local json = require("json")
 
@@ -45,11 +44,22 @@ function urbandict:run(context)
                     {name = "Example:", value = example, inline = false}
                 },
                 url = finalTermData.list[1].permalink,
+                timestamp = Discordia.Date():toISO('T', 'Z'),
                 color = _G.MainColor.value
-            }
+            },
+			reference = {
+				message = message,
+				mention = false
+			}
         }
 	else
-		message:reply("An error occured when trying to get this term's definition!")
+		message:reply{
+            content = "An error occured when trying to get this term's definition!",
+			reference = {
+				message = message,
+				mention = false
+			}
+        }
 	end
 end
 

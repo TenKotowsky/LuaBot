@@ -1,15 +1,14 @@
-require("discordia-expanded")
 local BotData = require("../dependencies/BotData.lua")
-local Functions = require("../dependencies/Functions.lua")
 local corohttp = require("coro-http")
 local json = require("json")
 
 local key = BotData.SteamKey
 
 
-local robloxuser = {}
+local steamuser = {}
 
-function robloxuser:run(context)
+function steamuser:run(context)
+    local message = context.Message
     if context.Args and context.Args[1] then
 		
         local vanityUsername = context.Args[1]
@@ -20,7 +19,13 @@ function robloxuser:run(context)
 		if userId and userId.response and userId.response.steamid then
             userId = userId.response.steamid
         else
-            context.Message:reply("Couldn't find such user!")
+            context.Message:reply{
+                content = "Couldn't find such user!",
+                reference = {
+                    message = message,
+                    mention = false
+                }
+            }
 			return
         end
 		
@@ -84,14 +89,25 @@ function robloxuser:run(context)
                         {name = "Country:", value = country, inline = false},
                         {name = "Recently played games:", value = recentlyPlayedString, inline = false}
                     },
+                    timestamp = Discordia.Date():toISO('T', 'Z'),
 					color = _G.MainColor.value
-				}
+				},
+                reference = {
+                    message = message,
+                    mention = false
+                }
 			}
 		else
-            context.Message:reply("Couldn't find such user!")
+            context.Message:reply{
+                content = "Couldn't find such user!",
+                reference = {
+                    message = message,
+                    mention = false
+                }
+            }
 			return
         end
 	end
 end
 
-return robloxuser
+return steamuser

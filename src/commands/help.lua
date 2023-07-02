@@ -1,4 +1,3 @@
-require("discordia-expanded")
 local sqlite3 = require("sqlite3")
 local conn = sqlite3.open("DataBase.sqlite")
 local BotData = require("../dependencies/BotData.lua")
@@ -22,18 +21,22 @@ function help:run(context)
 			{name = "**Website:**", value = "https://tenkotowsky.github.io/", inline = false},
 			{name = "**You can upvote me here! <3:**", value = "https://top.gg/bot/1103273590280949800", inline = false},
 			{name = "**Server prefix:**", value = prefix, inline = false},
-			{name = "**General:**", value = "`help`, `patreon`, `ping`, `prefix [prefix]`, `serverinfo`, `userinfo [user]`, `avatar [user]`, `embed [text]`, `emoji [emoji]`, `reminders`, `remindme [time] [reminder]`, `removereminder [id]`", inline = false},
+			{name = "**General:**", value = "`help`, `commandinfo [command name]`, `patreon`, `ping`, `prefix [prefix]`, `serverinfo`, `userinfo [user]`, `avatar [user]`, `embed [text]`, `emoji [emoji]`, `reminders`, `remindme [time] [reminder]`, `removereminder [id]`", inline = false},
 			{name = "**Moderation:**", value = "`ban [user] [reason]`, `tempban [user] [time] [reason]`, `kick [user]`, `mute [user] [time]`, `slowmode [time]`", inline = false},
-			{name = "**[BETA] Periodic questions (QOTD/W):**", value = "`questioninfo`, `questionlist`, `questionperiod [day/week]`, `questionchannel [channel id]`, `questionadd [question]`, `questionremove [id]`, `questiontime [hour]`", inline = false},
 			{name = "**Actions:**", value = "`tickle [user]`, `pat [user]`, `hug [user]`, `cuddle [user]`, `kiss [user]`, `slap [user]`, `smack [user]`", inline = false},
 			{name = "**Gaming:**", value = "`epicgamesfree`, `steamuser [vanity name]`, `lolprofile [region] [summoner name]`, `robloxuser [username]`", inline = false},
 			{name = "**4Fun:**", value = "`echo`, `eightball`, `quote`, `recipe [dish]`, `rhyme [word]`, `urbandict [term]`, `rps [rock/paper/scissors]`, `randomnumber [min] [max]`, `spotifyartist [name]`, `spotifyalbum [name]`", inline = false}
 		},
+		timestamp = Discordia.Date():toISO('T', 'Z'),
 		color = _G.MainColor.value
 	}
 
 	local message, err = context.Message:reply {
-		embed = embed
+		embed = embed,
+		reference = {
+			message = context.Message,
+			mention = false
+		}
 	}
 	if not message then
 		Functions.printTable(embed)

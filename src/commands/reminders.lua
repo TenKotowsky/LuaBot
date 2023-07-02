@@ -1,4 +1,3 @@
-require("discordia-expanded")
 local Functions = require("../dependencies/Functions.lua")
 local sqlite3 = require("sqlite3")
 local conn = sqlite3.open("DataBase.sqlite")
@@ -23,9 +22,9 @@ function reminders:run(context)
 				if reminderData then
 					remindersAmount = remindersAmount + 1
 					if i == 1 then
-						finalString = i..".\nID: "..numb.."\nTime: ".."<t:"..timeData[1][1]..":R>".."\n"..reminderData[1][1]
+						finalString = i..".\nID: "..numb.."\nTime: ".."<t:"..tonumber(timeData[1][1])..":R>".."\n"..reminderData[1][1]
 					else
-						finalString = finalString.."\n"..i..".\nID: "..numb.."\nTime: ".."<t:"..timeData[1][1]..":R>".."\n"..reminderData[1][1]
+						finalString = finalString.."\n"..i..".\nID: "..numb.."\nTime: ".."<t:"..tonumber(timeData[1][1])..":R>".."\n"..reminderData[1][1]
 					end
 				end
 			end
@@ -45,12 +44,23 @@ function reminders:run(context)
 				embed = {
 					title = "Reminders",
 					fields = fields,
+					timestamp = Discordia.Date():toISO('T', 'Z'),
 					color = _G.MainColor.value
+				},
+				reference = {
+					message = message,
+					mention = false
 				}
 			}
 
 		else
-			message:reply("You don't have any reminders set!")
+			message:reply{
+				content = "You don't have any reminders set!",
+				reference = {
+					message = message,
+					mention = false
+				}
+			}
 		end
 	end)
 	if not success then

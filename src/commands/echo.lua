@@ -1,4 +1,3 @@
-require("discordia-expanded")
 local echo = {}
 
 function echo:run(context)
@@ -17,9 +16,21 @@ function echo:run(context)
                 finalString = finalString.." "..v
             end
         end
-        message:reply(finalString)
+        message:reply{
+            content = finalString,
+			reference = {
+				message = message,
+				mention = false
+			}
+        }
     else
-        message:reply("You haven't typed any text!")
+        message:reply{
+            content = "You haven't typed any text!",
+			reference = {
+				message = message,
+				mention = false
+			}
+        }
     end
 end
 

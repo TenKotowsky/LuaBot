@@ -1,4 +1,3 @@
-require("discordia-expanded")
 local corohttp = require("coro-http")
 local json = require("json")
 local BotData = require("../dependencies/BotData.lua")
@@ -27,13 +26,25 @@ function lolprofile:run(context)
     if context.Args[1] and routingValues[context.Args[1]:lower()] then
         region = routingValues[context.Args[1]:lower()]
     else
-        message:reply("Specify a region!")
+        message:reply{
+            content = "Specify a region!",
+			reference = {
+				message = message,
+				mention = false
+			}
+        }
         return
     end
     if context.Args[2] then
         summonerName = context.Args[2]
     else
-        message:reply("Specify summoner's name!")
+        message:reply{
+            content = "Specify summoner's name!",
+			reference = {
+				message = message,
+				mention = false
+			}
+        }
         return
     end
 
@@ -83,11 +94,22 @@ function lolprofile:run(context)
                 title = finalLolData.name,
                 fields = fields,
                 thumbnail = {url = "https://ddragon.leagueoflegends.com/cdn/"..finalVersion.."/img/profileicon/"..finalLolData.profileIconId..".png"},
+                timestamp = Discordia.Date():toISO('T', 'Z'),
                 color = _G.MainColor.value
-            }
+            },
+			reference = {
+				message = message,
+				mention = false
+			}
         }
     else
-        message:reply(finalLolData.status.message)
+        message:reply{
+            content = finalLolData.status.message,
+			reference = {
+				message = message,
+				mention = false
+			}
+        }
     end
 end
 

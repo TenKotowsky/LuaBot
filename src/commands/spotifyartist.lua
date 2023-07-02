@@ -1,4 +1,3 @@
-require("discordia-expanded")
 local Functions = require("../dependencies/Functions.lua")
 local BotData = require("../dependencies/BotData.lua")
 local corohttp = require("coro-http")
@@ -42,15 +41,32 @@ function spotifyartist:run(context)
 						url = artistData.external_urls.spotify,
 						thumbnail = {url = artistData.images[1].url},
 						fields = fieldsT,
+						timestamp = Discordia.Date():toISO('T', 'Z'),
 						color = _G.MainColor.value
+					},
+					reference = {
+						message = message,
+						mention = false
 					}
 				}
 			end
 		else
-			message:reply("No artist with this name was found!")
+			message:reply{
+				content = "No artist with this name was found!",
+				reference = {
+					message = message,
+					mention = false
+				}
+			}
 		end
 	else
-		message:reply("An error occured while trying to get artist info!")
+		message:reply{
+			content = "An error occured while trying to get artist info!",
+			reference = {
+				message = message,
+				mention = false
+			}
+		}
 	end
 end
 

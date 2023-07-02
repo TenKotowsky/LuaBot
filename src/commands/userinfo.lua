@@ -1,4 +1,3 @@
-require("discordia-expanded")
 local Functions = require("../dependencies/Functions.lua")
 local userinfo = {}
 
@@ -10,7 +9,13 @@ function userinfo:run(context)
 	elseif tonumber(context.Args[1]) and _G.Client:getUser(context.Args[1]) then
 		user = _G.Client:getUser(context.Args[1])
 	else
-		message:reply("You need to specify a user!")
+		message:reply{
+			content = "You need to specify a user!",
+			reference = {
+				message = message,
+				mention = false
+			}
+		}
 		return
 	end
 	local dateCreated = math.floor(tonumber(user.createdAt))
@@ -28,7 +33,12 @@ function userinfo:run(context)
 						{name = "**Joined Discord:**", value = "<t:"..dateCreated..":R>", inline = false},
 						{name = "**Joined this server:**", value = "<t:"..dateJoined..":R>", inline = false}
 					},
+					timestamp = Discordia.Date():toISO('T', 'Z'),
 					color = _G.MainColor.value
+				},
+				reference = {
+					message = message,
+					mention = false
 				}
 			}
 		else
@@ -41,7 +51,12 @@ function userinfo:run(context)
 						{name = "**Joined Discord:**", value = "<t:"..dateCreated..":R>", inline = false},
 						{name = "**Joined this server:**", value = "<t:"..dateJoined..":R>", inline = false}
 					},
+					timestamp = Discordia.Date():toISO('T', 'Z'),
 					color = _G.MainColor.value
+				},
+				reference = {
+					message = message,
+					mention = false
 				}
 			}
 		end
@@ -54,7 +69,12 @@ function userinfo:run(context)
 					{name = "**ID:**", value = user.id, inline = false},
 					{name = "**Joined Discord:**", value = "<t:"..dateCreated..":R>", inline = false}
 				},
+				timestamp = Discordia.Date():toISO('T', 'Z'),
 				color = _G.MainColor.value
+			},
+			reference = {
+				message = message,
+				mention = false
 			}
 		}
 	end

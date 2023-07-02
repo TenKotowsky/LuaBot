@@ -1,4 +1,3 @@
-require("discordia-expanded")
 local Functions = require("../dependencies/Functions.lua")
 local BotData = require("../dependencies/BotData.lua")
 local corohttp = require("coro-http")
@@ -52,7 +51,12 @@ function spotifyalbum:run(context)
 							url = albumData.external_urls.spotify,
 							thumbnail = {url = albumData.images[1].url},
 							fields = fieldsT,
+							timestamp = Discordia.Date():toISO('T', 'Z'),
 							color = _G.MainColor.value
+						},
+						reference = {
+							message = message,
+							mention = false
 						}
 					}
 				else
@@ -63,6 +67,10 @@ function spotifyalbum:run(context)
 							thumbnail = {url = albumData.images[1].url},
 							fields = fieldsT,
 							color = _G.MainColor.value
+						},
+						reference = {
+							message = message,
+							mention = false
 						}
 					}
 					local secondFieldsT = {}
@@ -73,20 +81,30 @@ function spotifyalbum:run(context)
 					end
 					message:reply {
 						embed = {
-							title = albumData.name,
-							url = albumData.external_urls.spotify,
-							thumbnail = {url = albumData.images[1].url},
 							fields = secondFieldsT,
+							timestamp = Discordia.Date():toISO('T', 'Z'),
 							color = _G.MainColor.value
 						}
 					}
 				end
 			end
 		else
-			message:reply("No album with this name was found!")
+			message:reply{
+				content = "No album with this name was found!",
+				reference = {
+					message = message,
+					mention = false
+				}
+			}
 		end
 	else
-		message:reply("An error occured while trying to get album info!")
+		message:reply{
+			content = "An error occured while trying to get album info!",
+			reference = {
+				message = message,
+				mention = false
+			}
+		}
 	end
 end
 
