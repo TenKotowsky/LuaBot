@@ -7,5 +7,6 @@ botData.SpotifySecret = "..."
 botData.SteamKey = "..."
 botData.RiotKey = "..."
 botData.ApiNinjasKey = "..."
+botData.RapidApiKey = "..."
 
 return botData
