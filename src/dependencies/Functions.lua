@@ -6,16 +6,8 @@ local conn = sqlite3.open("DataBase.sqlite")
 
 local Functions = {}
 
-function Functions.sendQuestion(channel, rowQuestionData, guildId)
-	local row = rowQuestionData[1][1]
-	local question = rowQuestionData[2][1]
-	if channel then
-		channel:send{
-			content = question
-		}
-		conn:exec("UPDATE periodicquestionsconfig SET lastTimeSent = '"..os.time().."' WHERE guildId = "..guildId..";")
-		conn:exec("DELETE FROM periodicquestions WHERE rowid = "..tonumber(row)..";")
-	end
+function Functions.firstCharToUpper(str)
+    return (str:gsub("^%l", string.upper))
 end
 
 function Functions.basicChecks(message, permission, author, member)
@@ -177,15 +169,15 @@ function Functions.convertToSeconds(time)
 	if time then
 		pcall(function()
 			if tonumber(time) then
-				seconds = tonumber(time)
+				seconds = math.floor(tonumber(time))
 			elseif time:sub(#time, #time) == "s" then
-				seconds = tonumber(time:sub(1, #time - 1))
+				seconds = math.floor(tonumber(time:sub(1, #time - 1)))
 			elseif time:sub(#time, #time) == "m" then
-				seconds = tonumber(time:sub(1, #time - 1)) * 60
+				seconds = math.floor(tonumber(time:sub(1, #time - 1))) * 60
 			elseif time:sub(#time, #time) == "h" then
-				seconds = tonumber(time:sub(1, #time - 1)) * 3600
+				seconds = math.floor(tonumber(time:sub(1, #time - 1))) * 3600
 			elseif time:sub(#time, #time) == "d" then
-				seconds = tonumber(time:sub(1, #time - 1)) * 86400
+				seconds = math.floor(tonumber(time:sub(1, #time - 1)) * 86400)
 			end
 		end)
 	end
