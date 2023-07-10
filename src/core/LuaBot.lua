@@ -23,7 +23,7 @@ local function initializeCommands()
             callback({
                 CommandHandler = CommandHandler,
                 Message = message,
-				CommandName = key:lower(),
+		CommandName = key:lower(),
                 Args = {...},
             })
         end))
