@@ -12,7 +12,12 @@ function mute:run(context)
 		user = _G.Client:getUser(context.Args[1])
 	else
         message:reply{
-			content = "Mention a user to be muted!",
+			embed = {
+				title = "Specify a user to be muted!",
+				description = "Having problems with the command? Try using `commandinfo "..context.CommandName.."` to get more information about it!",
+				timestamp = Discordia.Date():toISO('T', 'Z'),
+				color = _G.MainColor.value
+			},
 			reference = {
 				message = message,
 				mention = false
@@ -25,7 +30,12 @@ function mute:run(context)
 		duration = Functions.convertToSeconds(context.Args[2])
 		if not duration then
 			message:reply{
-				content = "Specify mute duration properly!",
+				embed = {
+					title = "Specify mute duration properly!",
+					description = "Having problems with the command? Try using `commandinfo "..context.CommandName.."` to get more information about it!",
+					timestamp = Discordia.Date():toISO('T', 'Z'),
+					color = _G.MainColor.value
+				},
 				reference = {
 					message = message,
 					mention = false
@@ -35,7 +45,12 @@ function mute:run(context)
 		end
     else
         message:reply{
-			content = "Specify mute duration!",
+			embed = {
+				title = "Specify mute duration!",
+				description = "Having problems with the command? Try using `commandinfo "..context.CommandName.."` to get more information about it!",
+				timestamp = Discordia.Date():toISO('T', 'Z'),
+				color = _G.MainColor.value
+			},
 			reference = {
 				message = message,
 				mention = false
@@ -46,7 +61,12 @@ function mute:run(context)
 	local member
 	if not message.guild:getMember(user.id) then
 		message:reply{
-			content = "Couldn't find such user!",
+			embed = {
+				title = "Couldn't find such user!",
+				description = "Having problems with the command? Try using `commandinfo "..context.CommandName.."` to get more information about it!",
+				timestamp = Discordia.Date():toISO('T', 'Z'),
+				color = _G.MainColor.value
+			},
 			reference = {
 				message = message,
 				mention = false
@@ -59,7 +79,12 @@ function mute:run(context)
 
 	if Functions.basicChecks(message, "moderateMembers", author, member) == false then
 		message:reply{
-			content = "You don't have the Timeout Members permission!",
+			embed = {
+				title = "You don't have the Timeout Members permission!",
+				description = "Having problems with the command? Try using `commandinfo "..context.CommandName.."` to get more information about it!",
+				timestamp = Discordia.Date():toISO('T', 'Z'),
+				color = _G.MainColor.value
+			},
 			reference = {
 				message = message,
 				mention = false
@@ -76,7 +101,11 @@ function mute:run(context)
 
 	member:timeoutFor(duration)
 	message:reply{
-		content = "Successfully muted **"..user.username.."** for **"..duration.." seconds "..additional.."**",
+		embed = {
+			title = "Successfully muted **"..user.username.."** for **"..duration.." seconds "..additional.."**",
+			timestamp = Discordia.Date():toISO('T', 'Z'),
+			color = _G.MainColor.value
+		},
 		reference = {
 			message = message,
 			mention = false

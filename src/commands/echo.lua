@@ -25,7 +25,12 @@ function echo:run(context)
         }
     else
         message:reply{
-            content = "You haven't typed any text!",
+            embed = {
+				title = "You haven't typed any text!",
+				description = "Having problems with the command? Try using `commandinfo "..context.CommandName.."` to get more information about it!",
+				timestamp = Discordia.Date():toISO('T', 'Z'),
+				color = _G.MainColor.value
+			},
 			reference = {
 				message = message,
 				mention = false

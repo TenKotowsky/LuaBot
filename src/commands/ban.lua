@@ -13,7 +13,12 @@ function ban:run(context)
 		user = _G.Client:getUser(args[1])
 	else
 		message:reply{
-			content = "Mention a user to be banned!",
+			embed = {
+				title = "Mention a user to be banned!",
+				description = "Having problems with the command? Try using `commandinfo "..context.CommandName.."` to get more information about it!",
+				timestamp = Discordia.Date():toISO('T', 'Z'),
+				color = _G.MainColor.value
+			},
 			reference = {
 				message = message,
 				mention = false
@@ -24,7 +29,12 @@ function ban:run(context)
 	local member
 	if not message.guild:getMember(user.id) then
 		message:reply{
-			content = "Couldn't find such user!",
+			embed = {
+				title = "Couldn't find such user!",
+				description = "Having problems with the command? Try using `commandinfo "..context.CommandName.."` to get more information about it!",
+				timestamp = Discordia.Date():toISO('T', 'Z'),
+				color = _G.MainColor.value
+			},
 			reference = {
 				message = message,
 				mention = false
@@ -37,7 +47,12 @@ function ban:run(context)
 
 	if Functions.basicChecks(message, "banMembers", author, member) == false then
 		message:reply{
-			content = "You don't have the Ban Members permission!",
+			embed = {
+				title = "You don't have the Ban Members permission!",
+				description = "Having problems with the command? Try using `commandinfo "..context.CommandName.."` to get more information about it!",
+				timestamp = Discordia.Date():toISO('T', 'Z'),
+				color = _G.MainColor.value
+			},
 			reference = {
 				message = message,
 				mention = false
@@ -59,7 +74,11 @@ function ban:run(context)
 		end
 		member:ban(reason)
 		message:reply{
-			content = "Successfully banned **"..user.username.."**",
+			embed = {
+				title = "Successfully banned **"..user.username.."**",
+				timestamp = Discordia.Date():toISO('T', 'Z'),
+				color = _G.MainColor.value
+			},
 			reference = {
 				message = message,
 				mention = false
@@ -67,7 +86,12 @@ function ban:run(context)
 		}
 	else
 		message:reply{
-			content = "You can't ban someone whose highest role is higher than your highest role!",
+			embed = {
+				title = "You can't ban someone whose highest role is higher than your highest role!",
+				description = "Having problems with the command? Try using `commandinfo "..context.CommandName.."` to get more information about it!",
+				timestamp = Discordia.Date():toISO('T', 'Z'),
+				color = _G.MainColor.value
+			},
 			reference = {
 				message = message,
 				mention = false

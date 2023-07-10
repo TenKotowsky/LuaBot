@@ -14,7 +14,12 @@ function remindme:run(context)
             duration = context.Args[1]
         else
             message:reply{
-                content = "You need to specify a time for the reminder!",
+                embed = {
+                    title = "You need to specify a time for the reminder!",
+                    description = "Having problems with the command? Try using `commandinfo "..context.CommandName.."` to get more information about it!",
+                    timestamp = Discordia.Date():toISO('T', 'Z'),
+                    color = _G.MainColor.value
+                },
                 reference = {
                     message = message,
                     mention = false
@@ -33,7 +38,12 @@ function remindme:run(context)
             end
         else
             message:reply{
-                content = "You need to specify a reminder!",
+                embed = {
+                    title = "You need to specify a reminder!",
+                    description = "Having problems with the command? Try using `commandinfo "..context.CommandName.."` to get more information about it!",
+                    timestamp = Discordia.Date():toISO('T', 'Z'),
+                    color = _G.MainColor.value
+                },
                 reference = {
                     message = message,
                     mention = false
@@ -43,7 +53,12 @@ function remindme:run(context)
         end
 	else
         message:reply{
-            content = "You need to specify a time for the reminder!",
+            embed = {
+                title = "You need to specify a time for the reminder!",
+                description = "Having problems with the command? Try using `commandinfo "..context.CommandName.."` to get more information about it!",
+                timestamp = Discordia.Date():toISO('T', 'Z'),
+                color = _G.MainColor.value
+            },
 			reference = {
 				message = message,
 				mention = false
@@ -59,7 +74,12 @@ function remindme:run(context)
     end)
     if not time then
         message:reply{
-            content = "You need to specify proper time for the reminder!",
+            embed = {
+                title = "You need to specify proper time for the reminder!",
+                description = "Having problems with the command? Try using `commandinfo "..context.CommandName.."` to get more information about it!",
+                timestamp = Discordia.Date():toISO('T', 'Z'),
+                color = _G.MainColor.value
+            },
 			reference = {
 				message = message,
 				mention = false
@@ -76,7 +96,12 @@ function remindme:run(context)
         stmt:close()
 
         message:reply{
-            content = "A reminder will be sent to you on <t:"..time..":R>",
+            embed = {
+                title = "A reminder will be sent to you on:",
+                description = "<t:"..time..":R>",
+                timestamp = Discordia.Date():toISO('T', 'Z'),
+                color = _G.MainColor.value
+            },
 			reference = {
 				message = message,
 				mention = false

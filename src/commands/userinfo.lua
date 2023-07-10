@@ -10,7 +10,12 @@ function userinfo:run(context)
 		user = _G.Client:getUser(context.Args[1])
 	else
 		message:reply{
-			content = "You need to specify a user!",
+			embed = {
+				title = "You need to specify a user!",
+				description = "Having problems with the command? Try using `commandinfo "..context.CommandName.."` to get more information about it!",
+				timestamp = Discordia.Date():toISO('T', 'Z'),
+				color = _G.MainColor.value
+			},
 			reference = {
 				message = message,
 				mention = false

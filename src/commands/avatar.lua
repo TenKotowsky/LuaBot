@@ -8,7 +8,18 @@ function avatar:run(context)
 	elseif tonumber(context.Args[1]) and _G.Client:getUser(context.Args[1]) then
 		user = _G.Client:getUser(context.Args[1])
 	else
-		message:reply("You need to specify a user!")
+		message:reply{
+			embed = {
+				title = "You need to specify a user!",
+				description = "Having problems with the command? Try using `commandinfo "..context.CommandName.."` to get more information about it!",
+				timestamp = Discordia.Date():toISO('T', 'Z'),
+				color = _G.MainColor.value
+			},
+			reference = {
+				message = message,
+				mention = false
+			}
+		}
 		return
 	end
 	message:reply {

@@ -8,6 +8,21 @@ function tickle:run(context)
     local author = message.author
     local mentionedUser = message.mentionedUsers.first
 
+    if not mentionedUser then
+        message:reply {
+            embed = {
+				title = "You need someone to "..context.CommandName.."!",
+				description = "Having problems with the command? Try using `commandinfo "..context.CommandName.."` to get more information about it!",
+				timestamp = Discordia.Date():toISO('T', 'Z'),
+				color = _G.MainColor.value
+			},
+            reference = {
+                message = message,
+                mention = false
+            }
+        }
+        return
+    end
     local gifInfo
     local success, res = pcall(function()
         local data, body = corohtpp.request("GET", "https://api.otakugifs.xyz/gif?reaction=tickle")

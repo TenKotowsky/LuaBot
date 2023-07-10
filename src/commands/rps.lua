@@ -15,7 +15,12 @@ function rps:run(context)
     local message = context.Message
     if not context.Args[1] then
         message:reply{
-            content = "You have to choose between rock, paper and scissors!",
+            embed = {
+                title = "You have to choose between rock, paper and scissors!",
+                description = "Having problems with the command? Try using `commandinfo "..context.CommandName.."` to get more information about it!",
+                timestamp = Discordia.Date():toISO('T', 'Z'),
+                color = _G.MainColor.value
+            },
 			reference = {
 				message = message,
 				mention = false
@@ -26,7 +31,12 @@ function rps:run(context)
         local choice = context.Args[1]:lower()
         if not choices[choice] then
             message:reply{
-                content = "You have to choose between rock, paper and scissors!",
+                embed = {
+                    title = "You have to choose between rock, paper and scissors!",
+                    description = "Having problems with the command? Try using `commandinfo "..context.CommandName.."` to get more information about it!",
+                    timestamp = Discordia.Date():toISO('T', 'Z'),
+                    color = _G.MainColor.value
+                },
                 reference = {
                     message = message,
                     mention = false

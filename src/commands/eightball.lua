@@ -25,7 +25,12 @@ local responses = {
 
 function eightball:run(context)
     local msg, err = context.Message:reply{
-        content = responses[math.random(1, #responses)],
+        embed = {
+            title = "The magic 8ball says...",
+            description = responses[math.random(1, #responses)],
+            timestamp = Discordia.Date():toISO('T', 'Z'),
+            color = _G.MainColor.value
+        },
         reference = {
             message = context.Message,
             mention = false

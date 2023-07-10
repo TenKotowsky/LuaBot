@@ -22,10 +22,11 @@ function help:run(context)
 			{name = "**You can upvote me here! <3:**", value = "https://top.gg/bot/1103273590280949800", inline = false},
 			{name = "**Server prefix:**", value = prefix, inline = false},
 			{name = "**General:**", value = "`help`, `commandinfo [command name]`, `patreon`, `ping`, `prefix [prefix]`, `serverinfo`, `userinfo [user]`, `avatar [user]`, `embed [text]`, `emoji [emoji]`, `reminders`, `remindme [time] [reminder]`, `removereminder [id]`", inline = false},
-			{name = "**Moderation:**", value = "`ban [user] [reason]`, `tempban [user] [time] [reason]`, `kick [user]`, `mute [user] [time]`, `slowmode [time]`", inline = false},
-			{name = "**Actions:**", value = "`tickle [user]`, `pat [user]`, `hug [user]`, `cuddle [user]`, `kiss [user]`, `slap [user]`, `smack [user]`", inline = false},
+			{name = "**Minigames:**", value = "`wyr`, `riddle`, `rps [rock/paper/scissors]`", inline = false},
+			{name = "**4Fun:**", value = "`echo`, `eightball`, `fact`, `quote`, `urbandict [term]`, `recipe [dish]`, `rhyme [word]`, `ship [user1] [user2]`, `randomnumber [min] [max]`, `spotifyartist [name]`, `spotifyalbum [name]`", inline = false},
 			{name = "**Gaming:**", value = "`epicgamesfree`, `steamuser [vanity name]`, `lolprofile [region] [summoner name]`, `robloxuser [username]`", inline = false},
-			{name = "**4Fun:**", value = "`echo`, `eightball`, `quote`, `recipe [dish]`, `rhyme [word]`, `urbandict [term]`, `rps [rock/paper/scissors]`, `randomnumber [min] [max]`, `spotifyartist [name]`, `spotifyalbum [name]`", inline = false}
+			{name = "**Moderation:**", value = "`ban [user] [reason]`, `tempban [user] [time] [reason]`, `kick [user]`, `mute [user] [time]`, `slowmode [time]`", inline = false},
+			{name = "**Actions:**", value = "`tickle [user]`, `pat [user]`, `hug [user]`, `cuddle [user]`, `kiss [user]`, `slap [user]`, `smack [user]`", inline = false}
 		},
 		timestamp = Discordia.Date():toISO('T', 'Z'),
 		color = _G.MainColor.value

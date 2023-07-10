@@ -12,7 +12,12 @@ function recipe:run(context)
 
 	if #context.Args == 0 then
 		message:reply{
-			content = "Specify what you want to see a recipe for!",
+			embed = {
+				title = "Specify what you want to see a recipe for!",
+				description = "Having problems with the command? Try using `commandinfo "..context.CommandName.."` to get more information about it!",
+				timestamp = Discordia.Date():toISO('T', 'Z'),
+				color = _G.MainColor.value
+			},
 			reference = {
 				message = message,
 				mention = false
@@ -66,7 +71,12 @@ function recipe:run(context)
 		}
 	else
 		message:reply{
-			content = "Couldn't find a recipe for that!",
+			embed = {
+				title = "Couldn't find a recipe for that!",
+				description = "Having problems with the command? Try using `commandinfo "..context.CommandName.."` to get more information about it!",
+				timestamp = Discordia.Date():toISO('T', 'Z'),
+				color = _G.MainColor.value
+			},
 			reference = {
 				message = message,
 				mention = false

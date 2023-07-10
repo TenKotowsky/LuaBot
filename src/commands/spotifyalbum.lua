@@ -90,7 +90,11 @@ function spotifyalbum:run(context)
 			end
 		else
 			message:reply{
-				content = "No album with this name was found!",
+				embed = {
+					title = "No album with this name was found!",
+					timestamp = Discordia.Date():toISO('T', 'Z'),
+					color = _G.MainColor.value
+				},
 				reference = {
 					message = message,
 					mention = false
@@ -99,7 +103,11 @@ function spotifyalbum:run(context)
 		end
 	else
 		message:reply{
-			content = "An error occured while trying to get album info!",
+			embed = {
+				title = "An error occured while trying to get album info!",
+				timestamp = Discordia.Date():toISO('T', 'Z'),
+				color = _G.MainColor.value
+			},
 			reference = {
 				message = message,
 				mention = false

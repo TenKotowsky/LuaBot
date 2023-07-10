@@ -26,7 +26,11 @@ function robloxuser:run(context)
 
 		if not finalData[1] then
 			context.Message:reply{
-				content = "Couldn't find such user!",
+				embed = {
+					title = "Couldn't find such user!",
+					timestamp = Discordia.Date():toISO('T', 'Z'),
+					color = _G.MainColor.value
+				},
 				reference = {
 					message = message,
 					mention = false

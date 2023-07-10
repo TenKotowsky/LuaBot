@@ -55,7 +55,11 @@ function reminders:run(context)
 
 		else
 			message:reply{
-				content = "You don't have any reminders set!",
+				embed = {
+					title = "You don't have any reminders set!",
+					timestamp = Discordia.Date():toISO('T', 'Z'),
+					color = _G.MainColor.value
+				},
 				reference = {
 					message = message,
 					mention = false

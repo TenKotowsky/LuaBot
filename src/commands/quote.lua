@@ -2,8 +2,6 @@ local BotData = require("../dependencies/BotData.lua")
 local corohttp = require("coro-http")
 local json = require("json")
 
-local quote = {}
-
 local quotes = {
 	"In three words I can sum up everything I've learned about life: it goes on.\n- Robert Frost.",
 	"When something is important enough, you do it even if the odds are not in your favor.\n- Elon Musk",
@@ -14,6 +12,8 @@ local quotes = {
 	"The most hateful human misfortune is for a wise man to have no influence.\n- Herodotus",
 	"Be yourself; everyone else is already taken.\n- Oscar Wilde"
 }
+
+local quote = {}
 
 function quote:run(context)
     local message = context.Message

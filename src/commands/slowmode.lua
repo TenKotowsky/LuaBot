@@ -12,7 +12,12 @@ function slowmode:run(context)
 		limit = Functions.convertToSeconds(limitArg)
 		if not limit then
 			message:reply{
-				content = "Specify slowmode duration properly!",
+				embed = {
+					title = "Specify slowmode duration properly!",
+					description = "Having problems with the command? Try using `commandinfo "..context.CommandName.."` to get more information about it!",
+					timestamp = Discordia.Date():toISO('T', 'Z'),
+					color = _G.MainColor.value
+				},
 				reference = {
 					message = message,
 					mention = false
@@ -24,7 +29,12 @@ function slowmode:run(context)
 		end
 	else
 		message:reply{
-			content = "Please specify slowmode's duration in seconds!",
+			embed = {
+				title = "Specify slowmode duration properly!",
+				description = "Having problems with the command? Try using `commandinfo "..context.CommandName.."` to get more information about it!",
+				timestamp = Discordia.Date():toISO('T', 'Z'),
+				color = _G.MainColor.value
+			},
 			reference = {
 				message = message,
 				mention = false
@@ -36,7 +46,12 @@ function slowmode:run(context)
 	local author = message.guild:getMember(message.author.id)
 	if Functions.basicChecks(message, "manageChannels", author, true) == false then
 		message:reply{
-			content = "You don't have the Manage Channels permission!",
+			embed = {
+				title = "You don't have the Manage Channels permission!",
+				description = "Having problems with the command? Try using `commandinfo "..context.CommandName.."` to get more information about it!",
+				timestamp = Discordia.Date():toISO('T', 'Z'),
+				color = _G.MainColor.value
+			},
 			reference = {
 				message = message,
 				mention = false
@@ -50,7 +65,11 @@ function slowmode:run(context)
 		local convertedSeconds = Functions.secondsToHMS(limit)
 		if convertedSeconds == "0 seconds" then
 			message:reply{
-				content = "Disabled current channel's slowmode",
+				embed = {
+					title = "Disabled current channel's slowmode",
+					timestamp = Discordia.Date():toISO('T', 'Z'),
+					color = _G.MainColor.value
+				},
 				reference = {
 					message = message,
 					mention = false
@@ -58,7 +77,11 @@ function slowmode:run(context)
 			}
 		else
 			message:reply{
-				context = "Changed current channel's slowmode to **"..convertedSeconds.."**",
+				embed = {
+					title = "Changed current channel's slowmode to **"..convertedSeconds.."**",
+					timestamp = Discordia.Date():toISO('T', 'Z'),
+					color = _G.MainColor.value
+				},
 				reference = {
 					message = message,
 					mention = false

@@ -54,7 +54,11 @@ function urbandict:run(context)
         }
 	else
 		message:reply{
-            content = "An error occured when trying to get this term's definition!",
+            embed = {
+                title = "An error occured when trying to get this term's definition!",
+                timestamp = Discordia.Date():toISO('T', 'Z'),
+                color = _G.MainColor.value
+            },
 			reference = {
 				message = message,
 				mention = false

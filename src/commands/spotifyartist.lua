@@ -52,7 +52,11 @@ function spotifyartist:run(context)
 			end
 		else
 			message:reply{
-				content = "No artist with this name was found!",
+				embed = {
+					title = "No artist with this name was found!",
+					timestamp = Discordia.Date():toISO('T', 'Z'),
+					color = _G.MainColor.value
+				},
 				reference = {
 					message = message,
 					mention = false
@@ -61,7 +65,11 @@ function spotifyartist:run(context)
 		end
 	else
 		message:reply{
-			content = "An error occured while trying to get artist info!",
+			embed = {
+				title = "An error occured while trying to get artist info!",
+				timestamp = Discordia.Date():toISO('T', 'Z'),
+				color = _G.MainColor.value
+			},
 			reference = {
 				message = message,
 				mention = false

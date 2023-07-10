@@ -26,7 +26,11 @@ function removereminder:run(context)
 					deleteStmt:close()
 
 					message:reply{
-						content = "Removed the reminder!",
+						embed = {
+							title = "Removed the reminder!",
+							timestamp = Discordia.Date():toISO('T', 'Z'),
+							color = _G.MainColor.value
+						},
 						reference = {
 							message = message,
 							mention = false
@@ -34,7 +38,12 @@ function removereminder:run(context)
 					}
 				else
 					message:reply{
-						content = "Couldn't find a reminder with such id!",
+						embed = {
+							title = "Couldn't find a reminder with such id!",
+							description = "Having problems with the command? Try using `commandinfo "..context.CommandName.."` to get more information about it!",
+							timestamp = Discordia.Date():toISO('T', 'Z'),
+							color = _G.MainColor.value
+						},
 						reference = {
 							message = message,
 							mention = false
@@ -44,7 +53,12 @@ function removereminder:run(context)
 			end
 		else
 			message:reply{
-				content = "Provide a proper reminder index!",
+				embed = {
+					title = "Provide a proper reminder index!",
+					description = "Having problems with the command? Try using `commandinfo "..context.CommandName.."` to get more information about it!",
+					timestamp = Discordia.Date():toISO('T', 'Z'),
+					color = _G.MainColor.value
+				},
 				reference = {
 					message = message,
 					mention = false

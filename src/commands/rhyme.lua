@@ -12,7 +12,12 @@ function rhyme:run(context)
 
 	if #context.Args == 0 then
 		message:reply{
-			content = "Specify the word for which you want to see rhymes!",
+			embed = {
+				title = "Specify the word for which you want to see rhymes!",
+				description = "Having problems with the command? Try using `commandinfo "..context.CommandName.."` to get more information about it!",
+				timestamp = Discordia.Date():toISO('T', 'Z'),
+				color = _G.MainColor.value
+			},
 			reference = {
 				message = message,
 				mention = false
@@ -71,7 +76,17 @@ function rhyme:run(context)
 			}
 		end
 	else
-		message:reply("Couldn't find a recipe for that!")
+		message:reply{
+			embed = {
+				title = "Couldn't find a recipe for that!",
+				timestamp = Discordia.Date():toISO('T', 'Z'),
+				color = _G.MainColor.value
+			},
+			reference = {
+				message = message,
+				mention = false
+			}
+		}
 	end
 end
 

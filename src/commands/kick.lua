@@ -12,7 +12,12 @@ function kick:run(context)
 		user = _G.Client:getUser(context.Args[1])
 	else
 		message:reply{
-			content = "Mention a user to be kicked!",
+			embed = {
+				title = "Mention a user to be kicked!",
+				description = "Having problems with the command? Try using `commandinfo "..context.CommandName.."` to get more information about it!",
+				timestamp = Discordia.Date():toISO('T', 'Z'),
+				color = _G.MainColor.value
+			},
 			reference = {
 				message = message,
 				mention = false
@@ -23,7 +28,12 @@ function kick:run(context)
 	local member
 	if not message.guild:getMember(user.id) then
 		message:reply{
-			content = "Couldn't find such user!",
+			embed = {
+				title = "Couldn't find such user!",
+				description = "Having problems with the command? Try using `commandinfo "..context.CommandName.."` to get more information about it!",
+				timestamp = Discordia.Date():toISO('T', 'Z'),
+				color = _G.MainColor.value
+			},
 			reference = {
 				message = message,
 				mention = false
@@ -36,7 +46,12 @@ function kick:run(context)
 
 	if Functions.basicChecks(message, "kickMembers", author, member) == false then
 		message:reply{
-			content = "You don't have the Kick Members permission!",
+			embed = {
+				title = "You don't have the Kick Members permission!",
+				description = "Having problems with the command? Try using `commandinfo "..context.CommandName.."` to get more information about it!",
+				timestamp = Discordia.Date():toISO('T', 'Z'),
+				color = _G.MainColor.value
+			},
 			reference = {
 				message = message,
 				mention = false
@@ -47,7 +62,11 @@ function kick:run(context)
 
 	member:kick()
 	message:reply{
-		content = "Successfully kicked **"..user.username.."**",
+		embed = {
+			title = "Successfully kicked **"..user.username.."**",
+			timestamp = Discordia.Date():toISO('T', 'Z'),
+			color = _G.MainColor.value
+		},
 		reference = {
 			message = message,
 			mention = false

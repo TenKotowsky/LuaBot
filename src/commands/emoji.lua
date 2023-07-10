@@ -19,7 +19,12 @@ function emoji:run(context)
 
     if url == nil or emojiId == nil then
         message:reply{
-            content = "This is not a proper emoji",
+            embed = {
+				title = "This is not a proper emoji",
+				description = "Having problems with the command? Try using `commandinfo "..context.CommandName.."` to get more information about it!",
+				timestamp = Discordia.Date():toISO('T', 'Z'),
+				color = _G.MainColor.value
+			},
 			reference = {
 				message = message,
 				mention = false
@@ -31,7 +36,12 @@ function emoji:run(context)
             url = "https://cdn.discordapp.com/emojis/"..emojiId..".png"
         else
             message:reply{
-                content = "This is not a proper emoji",
+                embed = {
+                    title = "This is not a proper emoji",
+                    description = "Having problems with the command? Try using `commandinfo "..context.CommandName.."` to get more information about it!",
+                    timestamp = Discordia.Date():toISO('T', 'Z'),
+                    color = _G.MainColor.value
+                },
                 reference = {
                     message = message,
                     mention = false
@@ -43,7 +53,12 @@ function emoji:run(context)
 
     if emojiname == nil then
         message:reply{
-            content = "This is not a proper emoji",
+            embed = {
+				title = "This is not a proper emoji",
+				description = "Having problems with the command? Try using `commandinfo "..context.CommandName.."` to get more information about it!",
+				timestamp = Discordia.Date():toISO('T', 'Z'),
+				color = _G.MainColor.value
+			},
 			reference = {
 				message = message,
 				mention = false

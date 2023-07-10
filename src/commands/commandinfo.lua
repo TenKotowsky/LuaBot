@@ -10,7 +10,12 @@ function commandinfo:run(context)
         commandName = string.lower(context.Args[1])
     else
         message:reply {
-            content = "Specify a proper command name!",
+            embed = {
+				title = "Specify a proper command name!",
+				description = "You can get a list of bot's commands using the `help` command",
+				timestamp = Discordia.Date():toISO('T', 'Z'),
+				color = _G.MainColor.value
+			},
             reference = {
                 message = message,
                 mention = false
@@ -23,7 +28,12 @@ function commandinfo:run(context)
         commandInfo = descriptions[commandName]
     else
         message:reply {
-            content = "Couldn't find information about this command!",
+            embed = {
+				title = "Couldn't find information about this command!",
+				description = "You can get a list of bot's commands using the `help` command",
+				timestamp = Discordia.Date():toISO('T', 'Z'),
+				color = _G.MainColor.value
+			},
             reference = {
                 message = message,
                 mention = false

@@ -18,7 +18,12 @@ function prefix:run(context)
 	if prefix then
 		if #prefix > 5 then
 			message:reply{
-				content = "The prefix can't have more than 5 characters!",
+				embed = {
+					title = "The prefix can't have more than 5 characters!",
+					description = "Having problems with the command? Try using `commandinfo "..context.CommandName.."` to get more information about it!",
+					timestamp = Discordia.Date():toISO('T', 'Z'),
+					color = _G.MainColor.value
+				},
 				reference = {
 					message = message,
 					mention = false
@@ -34,7 +39,11 @@ function prefix:run(context)
 				stmt:close()
 
 				message:reply{
-					content = "This server's prefix has been changed to "..prefix,
+					embed = {
+						title = "This server's prefix has been changed to "..prefix,
+						timestamp = Discordia.Date():toISO('T', 'Z'),
+						color = _G.MainColor.value
+					},
 					reference = {
 						message = message,
 						mention = false
@@ -48,7 +57,11 @@ function prefix:run(context)
 				stmt:close()
 
 				message:reply{
-					content = "This server's prefix has been changed to "..prefix,
+					embed = {
+						title = "This server's prefix has been changed to "..prefix,
+						timestamp = Discordia.Date():toISO('T', 'Z'),
+						color = _G.MainColor.value
+					},
 					reference = {
 						message = message,
 						mention = false

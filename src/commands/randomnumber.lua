@@ -12,7 +12,12 @@ function randomnumber:run(context)
 		end
 	else
 		message:reply{
-			context = "Enter a valid minimum number!",
+			embed = {
+				title = "Enter a valid minimum number!",
+				description = "Having problems with the command? Try using `commandinfo "..context.CommandName.."` to get more information about it!",
+				timestamp = Discordia.Date():toISO('T', 'Z'),
+				color = _G.MainColor.value
+			},
 			reference = {
 				message = message,
 				mention = false
@@ -29,7 +34,12 @@ function randomnumber:run(context)
 		end
 	else
 		message:reply{
-			content = "Enter a valid maximum number!",
+			embed = {
+				title = "Enter a valid maximum number!",
+				description = "Having problems with the command? Try using `commandinfo "..context.CommandName.."` to get more information about it!",
+				timestamp = Discordia.Date():toISO('T', 'Z'),
+				color = _G.MainColor.value
+			},
 			reference = {
 				message = message,
 				mention = false
@@ -39,7 +49,11 @@ function randomnumber:run(context)
 	end
 
 	message:reply{
-		content = math.random(number1, number2),
+		embed = {
+			title = math.random(number1, number2),
+			timestamp = Discordia.Date():toISO('T', 'Z'),
+			color = _G.MainColor.value
+		},
 		reference = {
 			message = message,
 			mention = false

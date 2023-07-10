@@ -9,7 +9,7 @@ function serverinfo:run(context)
 	if #guild.features ~= 0 then
 		for i, v in pairs(guild.features) do
 			if i == 1 then
-				serverFeatures = Functions.firstCharToUpper(string.lower(v:gsub("_", "")))
+				serverFeatures = Functions.firstCharToUpper(string.lower(v:gsub("_", " ")))
 			else
 				serverFeatures  = serverFeatures.."\n"..Functions.firstCharToUpper(string.lower(v:gsub("_", "")))
 			end

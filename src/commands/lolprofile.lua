@@ -27,7 +27,12 @@ function lolprofile:run(context)
         region = routingValues[context.Args[1]:lower()]
     else
         message:reply{
-            content = "Specify a region!",
+            embed = {
+				title = "Specify a region!",
+				description = "Having problems with the command? Try using `commandinfo "..context.CommandName.."` to get more information about it!",
+				timestamp = Discordia.Date():toISO('T', 'Z'),
+				color = _G.MainColor.value
+			},
 			reference = {
 				message = message,
 				mention = false
@@ -35,11 +40,24 @@ function lolprofile:run(context)
         }
         return
     end
-    if context.Args[2] then
-        summonerName = context.Args[2]
+    local regionName = context.Args[1]
+    table.remove(context.Args, 1)
+    if context.Args[1] then
+        for i, v in pairs(context.Args) do
+            if i == 1 then
+                summonerName = context.Args[1]
+            else
+                summonerName = summonerName.."%20"..v
+            end
+        end
     else
         message:reply{
-            content = "Specify summoner's name!",
+            embed = {
+				title = "Specify summoner's name!",
+				description = "Having problems with the command? Try using `commandinfo "..context.CommandName.."` to get more information about it!",
+				timestamp = Discordia.Date():toISO('T', 'Z'),
+				color = _G.MainColor.value
+			},
 			reference = {
 				message = message,
 				mention = false
@@ -51,7 +69,7 @@ function lolprofile:run(context)
     local res, versions = corohttp.request("GET", "https://ddragon.leagueoflegends.com/api/versions.json")
 	local finalVersion = ""
 	local res, lolData = corohttp.request("GET", "https://"..region..".api.riotgames.com/lol/summoner/v4/summoners/by-name/"..summonerName.."?api_key="..BotData.RiotKey)
-	local finalLolData
+    local finalLolData
     local finalLastUsedChampions
 
     local names = {
@@ -60,12 +78,12 @@ function lolprofile:run(context)
         [3] = ""
     }
 
-	pcall(function()
+	local success, err = pcall(function()
 		finalLolData = json.decode(lolData)
         finalVersion = json.decode(versions)[1]
         local res, allChampions = corohttp.request("GET", "https://ddragon.leagueoflegends.com/cdn/"..finalVersion.."/data/en_US/champion.json")
         allChampions = json.decode(allChampions)
-        local res, lastUsedChampions = corohttp.request("GET", "https://"..region..".api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-puuid/"..finalLolData.puuid.."/top?count=3&api_key="..BotData.RiotKey)
+        local res, lastUsedChampions = corohttp.request("GET", "https://"..region..".api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-summoner/"..finalLolData.id.."/top?count=3&api_key="..BotData.RiotKey)
         finalLastUsedChampions = json.decode(lastUsedChampions)
         for i, v in pairs(allChampions.data) do
             if v.key == tostring(finalLastUsedChampions[1].championId) then
@@ -80,7 +98,7 @@ function lolprofile:run(context)
 
     if finalLolData and not finalLolData.status then
         local fields = {
-            {name = "Region", value = context.Args[1]:upper(), inline = true},
+            {name = "Region", value = regionName:upper(), inline = true},
             {name = "Summoner level", value = finalLolData.summonerLevel, inline = true},
             {name = "Last match", value = "<t:"..(math.floor(finalLolData.revisionDate/1000))..":R>", inline = true}
         }

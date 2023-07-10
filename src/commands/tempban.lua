@@ -20,7 +20,12 @@ function tempban:run(context)
 	local member
 	if not message.guild:getMember(user.id) then
 		message:reply{
-			content = "Couldn't find such user!",
+			embed = {
+				title = "Couldn't find such user!",
+				description = "Having problems with the command? Try using `commandinfo "..context.CommandName.."` to get more information about it!",
+				timestamp = Discordia.Date():toISO('T', 'Z'),
+				color = _G.MainColor.value
+			},
 			reference = {
 				message = message,
 				mention = false
@@ -41,7 +46,12 @@ function tempban:run(context)
         local hours = Functions.convertToHours(args[1])
         if not hours then
             message:reply{
-				content = "Specify a proper amount of hours the user should get banned for!",
+				embed = {
+					title = "Specify a proper amount of hours the user should get banned for!",
+					description = "Having problems with the command? Try using `commandinfo "..context.CommandName.."` to get more information about it!",
+					timestamp = Discordia.Date():toISO('T', 'Z'),
+					color = _G.MainColor.value
+				},
 				reference = {
 					message = message,
 					mention = false
@@ -71,7 +81,11 @@ function tempban:run(context)
 
 		member:ban(reason)
 		message:reply{
-			content = "Successfully banned **"..user.username.."** for **"..hours.." hours**",
+			embed = {
+				title = "Successfully banned **"..user.username.."** for **"..hours.." hours**",
+				timestamp = Discordia.Date():toISO('T', 'Z'),
+				color = _G.MainColor.value
+			},
 			reference = {
 				message = message,
 				mention = false
@@ -91,7 +105,12 @@ function tempban:run(context)
 
 	else
 		message:reply{
-			content = "You can't ban someone whose highest role is higher than your highest role!",
+			embed = {
+				title = "You can't ban someone whose highest role is higher than your highest role!",
+				description = "Having problems with the command? Try using `commandinfo "..context.CommandName.."` to get more information about it!",
+				timestamp = Discordia.Date():toISO('T', 'Z'),
+				color = _G.MainColor.value
+			},
 			reference = {
 				message = message,
 				mention = false
