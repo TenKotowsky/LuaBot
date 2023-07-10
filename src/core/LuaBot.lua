@@ -10,7 +10,7 @@ local CommandDescriptions = require("../dependencies/CommandDescriptions.lua")
 local TempbansInit = require("../initialize/InitializeTempbans.lua")
 local RemindersInit = require("../initialize/InitializeReminders.lua")
 
-_G.MainColor = Discordia.Color.fromHex("#000080")
+_G.MainColor = Discordia.Color.fromHex("#a9c3e9")
 
 --conn:exec("CREATE TABLE reminders(userId TEXT, time TEXT, reminder TEXT);")
 --CREATE TABLE tempban(guildId TEXT, userId TEXT, time TEXT);
@@ -23,6 +23,7 @@ local function initializeCommands()
             callback({
                 CommandHandler = CommandHandler,
                 Message = message,
+				CommandName = key:lower(),
                 Args = {...},
             })
         end))
