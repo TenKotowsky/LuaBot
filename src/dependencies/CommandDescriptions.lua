@@ -1,6 +1,11 @@
 local CommandDescriptions = {}
 
 CommandDescriptions.Descriptions = {
+    commandinfo = {
+        Description = "Shows basic information about given command (description, arguments and its category).",
+        Category = "General",
+        Arguments = "Command name"
+    },
     help = {
         Description = "Displays some information about the bot and a list of commands.",
         Category = "General",
@@ -17,7 +22,7 @@ CommandDescriptions.Descriptions = {
         Arguments = "None"
     },
     prefix = {
-        Description = "Changes current server's LuaBot prefix. The prefix can't be longer than 10 characters. \"Manage server\" permission required.",
+        Description = "Changes current server's LuaBot prefix. The prefix can't be longer than 5 characters. \"Manage server\" permission required.",
         Category = "General",
         Arguments = "New prefix"
     },
