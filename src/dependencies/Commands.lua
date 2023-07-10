@@ -1,5 +1,10 @@
 local Commands = {}
 
+local commandinfo = require("../commands/commandinfo.lua")
+function Commands.CommandInfo(context)
+	commandinfo:run(context)
+end
+
 local help = require("../commands/help.lua")
 function Commands.Help(context)
 	help:run(context)
@@ -40,44 +45,14 @@ function Commands.Kick(context)
 	kick:run(context)
 end
 
+local mute = require("../commands/mute.lua")
+function Commands.Mute(context)
+	mute:run(context)
+end
+
 local slowmode = require("../commands/slowmode.lua")
 function Commands.Slowmode(context)
 	slowmode:run(context)
-end
-
-local questionchannel = require("../commands/questionchannel.lua")
-function Commands.QuestionChannel(context)
-	questionchannel:run(context)
-end
-
-local questionperiod = require("../commands/questionperiod.lua")
-function Commands.QuestionPeriod(context)
-	questionperiod:run(context)
-end
-
-local questionadd = require("../commands/questionadd.lua")
-function Commands.QuestionAdd(context)
-	questionadd:run(context)
-end
-
-local questionlist = require("../commands/questionlist.lua")
-function Commands.QuestionList(context)
-	questionlist:run(context)
-end
-
-local questionremove = require("../commands/questionremove.lua")
-function Commands.QuestionRemove(context)
-	questionremove:run(context)
-end
-
-local questiontime = require("../commands/questiontime.lua")
-function Commands.QuestionTime(context)
-	questiontime:run(context)
-end
-
-local questioninfo = require("../commands/questioninfo.lua")
-function Commands.QuestionInfo(context)
-	questioninfo:run(context)
 end
 
 local ping = require("../commands/ping.lua")
@@ -95,9 +70,25 @@ function Commands.Embed(context)
 	embed:run(context)
 end
 
+local ship = require("../commands/ship.lua")
+function Commands.Ship(context)
+    ship:run(context)
+end
+
 local quote = require("../commands/quote.lua")
 function Commands.Quote(context)
 	quote:run(context)
+end
+
+local riddle = require("../commands/riddle.lua")
+function Commands.Riddle(context)
+	riddle:run(context)
+end
+
+
+local fact = require("../commands/fact.lua")
+function Commands.Fact(context)
+	fact:run(context)
 end
 
 local recipe = require("../commands/recipe.lua")
@@ -120,6 +111,11 @@ function Commands.RandomNumber(context)
 	randomnumber:run(context)
 end
 
+local rps = require("../commands/rps.lua")
+function Commands.RPS(context)
+	rps:run(context)
+end
+
 local spotifyartist = require("../commands/spotifyartist.lua")
 function Commands.SpotifyArtist(context)
 	spotifyartist:run(context)
@@ -135,9 +131,19 @@ function Commands.RobloxUser(context)
 	robloxuser:run(context)
 end
 
+local lolprofile = require("../commands/lolprofile.lua")
+function Commands.LOLProfile(context)
+	lolprofile:run(context)
+end
+
 local eightball = require("../commands/eightball.lua")
 function Commands.EightBall(context)
 	eightball:run(context)
+end
+
+local wyr = require("../commands/wyr.lua")
+function Commands.WYR(context)
+	wyr:run(context)
 end
 
 local epicgamesfree = require("../commands/epicgamesfree.lua")
